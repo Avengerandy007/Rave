@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Rave.dir/link.d CMakeFiles/Rave.dir/src/main.cpp.o -o Rave  /home/andrei/Projects/RaceVampireSurvivorsLikeGame/GameFr/libGameFr.a /home/andrei/Projects/RaceVampireSurvivorsLikeGame/Raylib/lib/libraylib.a

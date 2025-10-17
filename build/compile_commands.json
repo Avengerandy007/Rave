@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/build",
+  "command": "/usr/bin/c++  -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/include -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/GameFr/include -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/Raylib/include -std=gnu++20 -o CMakeFiles/Rave.dir/src/main.cpp.o -c /home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/main.cpp",
+  "file": "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/main.cpp",
+  "output": "CMakeFiles/Rave.dir/src/main.cpp.o"
+}
+]
