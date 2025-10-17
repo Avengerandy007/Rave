@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/include -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/GameFr/include -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/Raylib/include
+CXX_INCLUDES = -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/include -isystem /home/andrei/Projects/RaceVampireSurvivorsLikeGame/GameFr/include -isystem /home/andrei/Projects/RaceVampireSurvivorsLikeGame/Raylib/include
 
 CXX_FLAGS = -std=gnu++20
 

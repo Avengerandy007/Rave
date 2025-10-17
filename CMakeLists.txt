@@ -18,12 +18,21 @@ file(GLOB Rave_INCLUDE
 
 add_executable(Rave ${Rave_SOURCES})
 
+add_library(GameFr STATIC IMPORTED)
+set_target_properties(GameFr PROPERTIES
+    IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/GameFr/libGameFr.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/GameFr/include"
+)
+
+add_library(raylib_static STATIC IMPORTED)
+set_target_properties(raylib_static PROPERTIES
+    IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/Raylib/lib/libraylib.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/Raylib/include"
+)
+
 target_include_directories(Rave PUBLIC
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/GameFr/include
     ${CMAKE_SOURCE_DIR}/Raylib/include
 )
-target_link_libraries(Rave PRIVATE 
-	${CMAKE_SOURCE_DIR}/GameFr/libGameFr.a
-	${CMAKE_SOURCE_DIR}/Raylib/lib/libraylib.a
-)
+target_link_libraries(Rave PRIVATE GameFr raylib_static)

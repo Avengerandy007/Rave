@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/Player.cpp" "CMakeFiles/Rave.dir/src/Player.cpp.o" "gcc" "CMakeFiles/Rave.dir/src/Player.cpp.o.d"
   "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/main.cpp" "CMakeFiles/Rave.dir/src/main.cpp.o" "gcc" "CMakeFiles/Rave.dir/src/main.cpp.o.d"
   "" "Rave" "gcc" "CMakeFiles/Rave.dir/link.d"
   )

@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Rave.dir/link.d"
+  "CMakeFiles/Rave.dir/src/Player.cpp.o"
+  "CMakeFiles/Rave.dir/src/Player.cpp.o.d"
   "CMakeFiles/Rave.dir/src/main.cpp.o"
   "CMakeFiles/Rave.dir/src/main.cpp.o.d"
   "Rave"

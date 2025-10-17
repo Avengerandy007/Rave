@@ -85,12 +85,12 @@ clean: CMakeFiles/Rave.dir/clean
 CMakeFiles/Rave.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Rave.dir/build.make CMakeFiles/Rave.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Rave.dir/build.make CMakeFiles/Rave.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrei/Projects/RaceVampireSurvivorsLikeGame/build/CMakeFiles --progress-num=1,2 "Built target Rave"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrei/Projects/RaceVampireSurvivorsLikeGame/build/CMakeFiles --progress-num=1,2,3 "Built target Rave"
 .PHONY : CMakeFiles/Rave.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Rave.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrei/Projects/RaceVampireSurvivorsLikeGame/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrei/Projects/RaceVampireSurvivorsLikeGame/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Rave.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrei/Projects/RaceVampireSurvivorsLikeGame/build/CMakeFiles 0
 .PHONY : CMakeFiles/Rave.dir/rule
@@ -102,7 +102,7 @@ Rave: CMakeFiles/Rave.dir/rule
 # codegen rule for target.
 CMakeFiles/Rave.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Rave.dir/build.make CMakeFiles/Rave.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrei/Projects/RaceVampireSurvivorsLikeGame/build/CMakeFiles --progress-num=1,2 "Finished codegen for target Rave"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrei/Projects/RaceVampireSurvivorsLikeGame/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target Rave"
 .PHONY : CMakeFiles/Rave.dir/codegen
 
 # clean rule for target.

@@ -1,7 +1,13 @@
 [
 {
   "directory": "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/build",
-  "command": "/usr/bin/c++  -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/include -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/GameFr/include -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/Raylib/include -std=gnu++20 -o CMakeFiles/Rave.dir/src/main.cpp.o -c /home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/main.cpp",
+  "command": "/usr/bin/c++  -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/include -isystem /home/andrei/Projects/RaceVampireSurvivorsLikeGame/GameFr/include -isystem /home/andrei/Projects/RaceVampireSurvivorsLikeGame/Raylib/include -std=gnu++20 -o CMakeFiles/Rave.dir/src/Player.cpp.o -c /home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/Player.cpp",
+  "file": "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/Player.cpp",
+  "output": "CMakeFiles/Rave.dir/src/Player.cpp.o"
+},
+{
+  "directory": "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/build",
+  "command": "/usr/bin/c++  -I/home/andrei/Projects/RaceVampireSurvivorsLikeGame/include -isystem /home/andrei/Projects/RaceVampireSurvivorsLikeGame/GameFr/include -isystem /home/andrei/Projects/RaceVampireSurvivorsLikeGame/Raylib/include -std=gnu++20 -o CMakeFiles/Rave.dir/src/main.cpp.o -c /home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/main.cpp",
   "file": "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/main.cpp",
   "output": "CMakeFiles/Rave.dir/src/main.cpp.o"
 }
