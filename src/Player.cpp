@@ -20,5 +20,6 @@ void Player::Move(){
 void Player::Update(){
 	Move();
 	AssignDimensionsToRenderingLibRect<float>(rect.x, rect.y, rect.width, rect.height);
+	DrawTexture(texture.texture, position.X, position.Y, WHITE);
 	std::cout << (int)position.X << " " << (int)position.Y << "\n";
 }

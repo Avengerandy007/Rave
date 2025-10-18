@@ -4,6 +4,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Rave.dir/src/Player.cpp.o.d"
   "CMakeFiles/Rave.dir/src/main.cpp.o"
   "CMakeFiles/Rave.dir/src/main.cpp.o.d"
+  "CMakeFiles/Rave.dir/src/util/Texture.cpp.o"
+  "CMakeFiles/Rave.dir/src/util/Texture.cpp.o.d"
   "Rave"
   "Rave.pdb"
 )

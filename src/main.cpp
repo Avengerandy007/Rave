@@ -2,9 +2,9 @@
 #include <raylib.h>
 
 int main(){
-	Player p;
 	SetTargetFPS(60);
 	InitWindow(500, 500, "HMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+	Player p;
 	while (!WindowShouldClose()){
 		BeginDrawing();
 		ClearBackground(WHITE);

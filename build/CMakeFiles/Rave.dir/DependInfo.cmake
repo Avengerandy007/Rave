@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/Player.cpp" "CMakeFiles/Rave.dir/src/Player.cpp.o" "gcc" "CMakeFiles/Rave.dir/src/Player.cpp.o.d"
   "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/main.cpp" "CMakeFiles/Rave.dir/src/main.cpp.o" "gcc" "CMakeFiles/Rave.dir/src/main.cpp.o.d"
+  "/home/andrei/Projects/RaceVampireSurvivorsLikeGame/src/util/Texture.cpp" "CMakeFiles/Rave.dir/src/util/Texture.cpp.o" "gcc" "CMakeFiles/Rave.dir/src/util/Texture.cpp.o.d"
   "" "Rave" "gcc" "CMakeFiles/Rave.dir/link.d"
   )
 

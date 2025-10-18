@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Collect all .cpp/.c files under src/ (CONFIGURE_DEPENDS makes CMake re-run when files change)
 file(GLOB Rave_SOURCES
     ${CMAKE_SOURCE_DIR}/src/*.cpp
+    ${CMAKE_SOURCE_DIR}/src/util/*.cpp
 )
 
 file(GLOB Rave_INCLUDE

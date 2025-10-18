@@ -184,6 +184,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Rave.dir/build.make CMakeFiles/Rave.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/util/Texture.o: src/util/Texture.cpp.o
+.PHONY : src/util/Texture.o
+
+# target to build an object file
+src/util/Texture.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Rave.dir/build.make CMakeFiles/Rave.dir/src/util/Texture.cpp.o
+.PHONY : src/util/Texture.cpp.o
+
+src/util/Texture.i: src/util/Texture.cpp.i
+.PHONY : src/util/Texture.i
+
+# target to preprocess a source file
+src/util/Texture.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Rave.dir/build.make CMakeFiles/Rave.dir/src/util/Texture.cpp.i
+.PHONY : src/util/Texture.cpp.i
+
+src/util/Texture.s: src/util/Texture.cpp.s
+.PHONY : src/util/Texture.s
+
+# target to generate assembly for a file
+src/util/Texture.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Rave.dir/build.make CMakeFiles/Rave.dir/src/util/Texture.cpp.s
+.PHONY : src/util/Texture.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -200,6 +224,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/util/Texture.o"
+	@echo "... src/util/Texture.i"
+	@echo "... src/util/Texture.s"
 .PHONY : help
 
 
