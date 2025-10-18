@@ -1,6 +1,5 @@
 #include "Player.hpp"
 #include "raylib.h"
-#include <iostream>
 
 void Player::Move(){
 	direction.X = 0;
@@ -19,7 +18,6 @@ void Player::Move(){
 
 void Player::Update(){
 	Move();
-	AssignDimensionsToRenderingLibRect<float>(rect.x, rect.y, rect.width, rect.height);
+	if (rect.x != position.X || rect.y != position.Y) AssignDimensionsToRenderingLibRect<float>(rect.x, rect.y, rect.width, rect.height);
 	DrawTexture(texture.texture, position.X, position.Y, WHITE);
-	std::cout << (int)position.X << " " << (int)position.Y << "\n";
 }

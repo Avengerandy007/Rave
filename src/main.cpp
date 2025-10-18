@@ -3,7 +3,8 @@
 
 int main(){
 	SetTargetFPS(60);
-	InitWindow(500, 500, "HMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	InitWindow(1000, 1000, "Rave");
 	Player p;
 	while (!WindowShouldClose()){
 		BeginDrawing();
