@@ -21,7 +21,6 @@ void Player::Move(){
 void Player::Update(){
 	Move();
 	GetRenderingPosition(*camera);
-	if (rect.x != position.X || rect.y != position.Y) AssignDimensionsToRenderingLibRect<float>(rect.x, rect.y, rect.width, rect.height);
 	if (onScreen){
 		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
 	}

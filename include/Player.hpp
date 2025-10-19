@@ -1,5 +1,4 @@
 #pragma once
-#include "raylib.h"
 #include "util/Texture.hpp"
 #include "entities.hpp"
 #include <camera.hpp>
@@ -8,7 +7,6 @@
 namespace GF = GameFr;
 
 class Player : public GF::Entity2D{
-	Rectangle rect;
 	GF::Vector2 direction;
 	float speed = 1;
 	Util::Texture texture = Util::Texture("Player.png");
