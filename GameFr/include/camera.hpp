@@ -4,13 +4,12 @@
 #include "entities.hpp"
 namespace GameFr{
 	class Camera2D{
-	protected:
+	public:
 		enum struct Modes{
 			DONT_FOLLOW,
 			FOLLOW,
 			KEEP_ON_SCREEN
 		};
-	public:
 		Vector2 position;
 		const uint32_t resolutionX, resolutionY;
 		Modes camMode;

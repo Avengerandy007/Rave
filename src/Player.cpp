@@ -1,5 +1,7 @@
 #include "Player.hpp"
+#include <iostream>
 #include "raylib.h"
+#include <camera.hpp>
 
 void Player::Move(){
 	direction.X = 0;
@@ -18,6 +20,14 @@ void Player::Move(){
 
 void Player::Update(){
 	Move();
+	GetRenderingPosition(*camera);
 	if (rect.x != position.X || rect.y != position.Y) AssignDimensionsToRenderingLibRect<float>(rect.x, rect.y, rect.width, rect.height);
-	DrawTexture(texture.texture, position.X, position.Y, WHITE);
+	if (onScreen){
+		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
+	}
+	std::cout << (int)position.X << " " << (int)position.Y << "\n";
+}
+
+void Player::SetCamera(const std::shared_ptr<GameFr::Camera2D> cam){
+	camera = cam;
 }
