@@ -1,7 +1,6 @@
 #include "Decoration.hpp"
 #include <camera.hpp>
 #include <cstdlib>
-#include <iostream>
 #include <memory>
 #include <cmath>
 #include <raylib.h>

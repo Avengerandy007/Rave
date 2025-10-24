@@ -1,15 +1,14 @@
 #pragma once
 #include "camera.hpp"
 #include "Player.hpp"
-#include "Decoration.hpp"
-#include <array>
+#include "util/ObjectArray.hpp"
 #include <memory>
 
 class GameManager{
 public:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<GameFr::Camera2D> camera;
-	Decoration deco = Decoration("/home/andrei/Projects/Pacman/Game/resources/Wall.png", camera);
+	Util::ObjectArray<6> decorations;
 	void Update();
 	GameManager();
 };
