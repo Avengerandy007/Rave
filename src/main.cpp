@@ -10,8 +10,7 @@ int main(){
 	while (!WindowShouldClose()){
 		BeginDrawing();
 		ClearBackground(WHITE);
-		game.camera->Update();
-		game.player->Update();
+		game.Update();
 		EndDrawing();
 	}
 	CloseWindow();
