@@ -6,7 +6,7 @@
 #include <memory>
 
 class Decoration : public GameFr::Entity2D{
-	Util::Texture texture;
+	std::shared_ptr<Util::Texture> texture;
 	std::shared_ptr<GameFr::Camera2D> camera;
 	void Regenerate();
 	GameFr::Randomizer random;

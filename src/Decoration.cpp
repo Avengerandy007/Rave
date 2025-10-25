@@ -5,13 +5,15 @@
 #include <cmath>
 #include <raylib.h>
 
-Decoration::Decoration(const std::string texturePath, const std::shared_ptr<GameFr::Camera2D> cam) : texture(texturePath), camera(cam), random(-200, 200){}
+Decoration::Decoration(const std::string texturePath, const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-200, 200){
+	texture = std::make_shared<Util::Texture>(texturePath);
+}
 
 void Decoration::Update(){
 	Regenerate();
 	GetRenderingPosition(*camera);
 	if (onScreen){
-		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
+		DrawTexture(texture->texture, renderingPostion.X, renderingPostion.Y, WHITE);
 	}
 }
 
