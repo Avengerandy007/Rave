@@ -1,12 +1,13 @@
 #include "Decoration.hpp"
 #include <camera.hpp>
+#include "util/TextureArrays.hpp"
 #include <cstdlib>
 #include <memory>
 #include <cmath>
 #include <raylib.h>
 
-Decoration::Decoration(const std::string texturePath, const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-200, 200){
-	texture = std::make_shared<Util::Texture>(texturePath);
+Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-200, 200){
+	texture = Util::TextureArrays::decorations[0];
 }
 
 void Decoration::Update(){

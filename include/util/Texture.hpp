@@ -8,6 +8,7 @@ namespace Util{
 	public:
 		Texture2D texture;
 		Texture(std::string path);
+		Texture();
 		~Texture();
 	};
 }

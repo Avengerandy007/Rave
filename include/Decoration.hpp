@@ -11,6 +11,6 @@ class Decoration : public GameFr::Entity2D{
 	void Regenerate();
 	GameFr::Randomizer random;
 public:
-	Decoration(const std::string texturePath, const std::shared_ptr<GameFr::Camera2D> cam);
+	Decoration(const std::shared_ptr<GameFr::Camera2D> cam);
 	void Update() override;
 };
