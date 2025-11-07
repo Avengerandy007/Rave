@@ -32,6 +32,8 @@ void Decoration::Regenerate(){
 			random.ChangeRange((int)(player->position.X + player->direction.X * (camera->resolutionX + 300)), (int)(player->position.X  + player->direction.X * camera->resolutionX));
 		}
 		position.X = random.GetRandomNumber();
+		random.ChangeRange(0, 1);
+		texture = Util::TextureArrays::decorations[random.GetRandomNumber()];
 	}
 	//check if distance between this and player is larger than the resolution on Y
 	if (std::abs(player->position.Y - position.Y) > camera->resolutionY){
@@ -42,5 +44,7 @@ void Decoration::Regenerate(){
 			random.ChangeRange((int)(player->position.Y + player->direction.Y * (camera->resolutionY + 300)), (int)(player->position.Y + player->direction.Y * camera->resolutionY));
 		}
 		position.Y = random.GetRandomNumber();
+		random.ChangeRange(0, 1);
+		texture = Util::TextureArrays::decorations[random.GetRandomNumber()];
 	}
 }
