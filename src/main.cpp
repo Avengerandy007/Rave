@@ -7,7 +7,10 @@ std::array<std::shared_ptr<Util::Texture>, 2> Util::TextureArrays::decorations;
 
 void InitTextureArrays(){
 	namespace TA = Util::TextureArrays;
-	TA::decorations = {std::make_shared<Util::Texture>("/home/andrei/Projects/Pacman/Game/resources/Wall.png")};
+	TA::decorations = {
+		std::make_shared<Util::Texture>("resources/Wall.png"),
+		std::make_shared<Util::Texture>("resources/Player.png")
+	};
 }
 
 int main(){

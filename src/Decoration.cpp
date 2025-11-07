@@ -7,9 +7,10 @@
 #include <raylib.h>
 
 Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-GetScreenWidth(), GetScreenWidth()){
-	texture = Util::TextureArrays::decorations[0];
 	position.X = random.GetRandomNumber();
 	position.Y = random.GetRandomNumber();
+	random.ChangeRange(0, 1);
+	texture = Util::TextureArrays::decorations[random.GetRandomNumber()];
 	player = std::reinterpret_pointer_cast<Player>(camera->entity);
 }
 
