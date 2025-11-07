@@ -11,4 +11,5 @@ public:
 	Util::ObjectArray<6> decorations;
 	void Update();
 	GameManager();
+	void InitEntities();
 };

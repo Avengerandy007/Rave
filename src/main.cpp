@@ -16,12 +16,9 @@ int main(){
 	InitWindow(1000, 1000, "Rave");
 	InitTextureArrays();
 	GameManager game;
-	game.player->SetCamera(game.camera);
+	game.InitEntities();
 	while (!WindowShouldClose()){
-		BeginDrawing();
-		ClearBackground(WHITE);
 		game.Update();
-		EndDrawing();
 	}
 	CloseWindow();
 }
