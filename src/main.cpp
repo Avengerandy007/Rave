@@ -12,8 +12,8 @@ void InitTextureArrays(){
 
 int main(){
 	SetTargetFPS(60);
-	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	InitWindow(1000, 1000, "Rave");
+	InitWindow(GetScreenWidth(), GetScreenHeight(), "Rave");
+	ToggleBorderlessWindowed();
 	InitTextureArrays();
 	GameManager game;
 	game.InitEntities();
