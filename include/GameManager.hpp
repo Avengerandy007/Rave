@@ -8,7 +8,7 @@ class GameManager{
 public:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<GameFr::Camera2D> camera;
-	Util::ObjectArray<6> decorations;
+	Util::ObjectArray<25> decorations;
 	void Update();
 	GameManager();
 	void InitEntities();
