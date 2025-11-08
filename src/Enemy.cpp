@@ -4,7 +4,7 @@
 #include "util/TextureArrays.hpp"
 #include <raylib.h>
 
-Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(2, 4){
+Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(2, 5){
 	speed = random.GetRandomNumber();
 	camera = cam;
 	random.ChangeRange(pl->position.X - GetScreenWidth(), pl->position.X);
@@ -17,12 +17,12 @@ Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) 
 void Enemy::Move(){
 	if (player->position.X > position.X){
 		position.X += speed;
-	}else {
+	}else if (player->position.X < position.X){
 		position.X -= speed;
 	}
 	if (player->position.Y > position.Y){
 		position.Y += speed;
-	}else {
+	}else if (player->position.Y < position.Y){
 		position.Y -= speed;
 	}
 }
