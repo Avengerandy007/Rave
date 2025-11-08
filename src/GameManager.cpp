@@ -22,6 +22,7 @@ void GameManager::Update(){
 	decorations.UpdateAll();
 	player->Update();
 	camera->Update();
+	enemies.UpdateAll();
 
 	EndDrawing();
 }

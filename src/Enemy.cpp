@@ -1,19 +1,34 @@
 #include "Enemy.hpp"
 #include <camera.hpp>
 #include <memory>
+#include "util/TextureArrays.hpp"
 #include <raylib.h>
-#include <iostream>
 
-Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(0, 1){
+Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(2, 4){
+	speed = random.GetRandomNumber();
 	camera = cam;
-	random.ChangeRange(pl->position.X - GetScreenWidth() - 50, pl->position.X - GetScreenWidth());
+	random.ChangeRange(pl->position.X - GetScreenWidth(), pl->position.X);
 	position.X = random.GetRandomNumber();
-	random.ChangeRange(pl->position.Y - GetScreenHeight() - 50, pl->position.Y - GetScreenHeight());
+	random.ChangeRange(pl->position.Y - GetScreenHeight(), pl->position.Y);
 	position.Y = random.GetRandomNumber();
+	texture = Util::TextureArrays::enemies[0];
+}
+
+void Enemy::Move(){
+	if (player->position.X > position.X){
+		position.X += speed;
+	}else {
+		position.X -= speed;
+	}
+	if (player->position.Y > position.Y){
+		position.Y += speed;
+	}else {
+		position.Y -= speed;
+	}
 }
 
 void Enemy::Update(){
-	std::cout << "Hellloooooo\n";
 	GetRenderingPosition(*camera);
 	if (onScreen) DrawTexture(texture->texture, renderingPostion.X, renderingPostion.Y, WHITE);
+	Move();
 }

@@ -4,12 +4,16 @@
 #include <raylib.h>
 
 std::array<std::shared_ptr<Util::Texture>, 2> Util::TextureArrays::decorations;
+std::array<std::shared_ptr<Util::Texture>, 1> Util::TextureArrays::enemies;
 
 void InitTextureArrays(){
 	namespace TA = Util::TextureArrays;
 	TA::decorations = {
 		std::make_shared<Util::Texture>("resources/Wall.png"),
 		std::make_shared<Util::Texture>("resources/Player.png")
+	};
+	TA::enemies = {
+		std::make_shared<Util::Texture>("resources/Ghost.png")
 	};
 }
 

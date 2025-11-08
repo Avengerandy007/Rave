@@ -5,4 +5,5 @@
 
 namespace Util::TextureArrays{
 	extern std::array<std::shared_ptr<Util::Texture>, 2> decorations;
+	extern std::array<std::shared_ptr<Util::Texture>, 1> enemies;
 }

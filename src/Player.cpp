@@ -1,5 +1,4 @@
 #include "Player.hpp"
-#include <iostream>
 #include "raylib.h"
 #include <camera.hpp>
 
@@ -26,7 +25,6 @@ void Player::Update(){
 	if (onScreen){
 		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
 	}
-	std::cout << (int)position.X << " " << (int)position.Y << "\n";
 }
 
 void Player::SetCamera(const std::shared_ptr<GameFr::Camera2D> cam){
