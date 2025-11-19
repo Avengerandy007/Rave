@@ -9,6 +9,8 @@ namespace Util{
 		Texture2D texture;
 		Texture(std::string path);
 		Texture();
+		Texture(const Texture& other);
+		void Assign(std::string path);
 		~Texture();
 	};
 }

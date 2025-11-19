@@ -1,6 +1,22 @@
 #include "Player.hpp"
 #include "raylib.h"
 #include <camera.hpp>
+#include <entities.hpp>
+#include <event.hpp>
+#include <util/vectors.hpp>
+#include "Decoration.hpp"
+#include "util/Globals.hpp"
+#include <iostream>
+
+Player::Player(){
+	std::cout << "Befor event interface\n";
+	eventInterface.AssignQueue(std::make_shared<GameFr::EventQueue>(Global::eventQueue)); 
+	std::cout << "After event interface\n";
+}
+
+void Player::SetTexture(){
+	texture.Assign("resources/Player.png");
+}
 
 void Player::Move(){
 	direction.X = 0;
@@ -16,6 +32,7 @@ void Player::Move(){
 	}
 	if (IsKeyDown(KEY_LEFT_SHIFT)) speed = 5;
 	else speed = 1;
+
 	Push(direction, speed);
 }
 

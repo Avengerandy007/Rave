@@ -1,9 +1,11 @@
 #pragma once
 #include "util/vectors.hpp"
+#include "event.hpp"
 #include <inttypes.h>
+#include <memory>
 namespace GameFr{
 	class Camera2D;
-	class Entity2D{
+	class Entity2D : public std::enable_shared_from_this<Entity2D>{
 	public:
 		Vector2 position;
 		uint32_t width, height;
@@ -11,6 +13,9 @@ namespace GameFr{
 		bool CollidingRect(const Entity2D& other) const;				   //Simple AABB collision detection
 		bool CollidingCircle(const Entity2D& other, const uint32_t desiredDistance) const; //Check if this is in a certain range of another Entity2D object
 		virtual void Update() = 0;
+
+		std::shared_ptr<const Entity2D> GetPtr() const;
+		Entity2D();
 
 	protected:
 		/*
@@ -37,6 +42,7 @@ namespace GameFr{
 		void GetRenderingPosition(const Camera2D& camera);	/* Gets the position that reflects where this should be rendered
 									 * and also checks if it's visible on the given camera
 									*/
+		EventInterface eventInterface;
 	};
 
 	class Entity3D{

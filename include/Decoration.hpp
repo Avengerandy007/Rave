@@ -1,10 +1,11 @@
 #pragma once
 #include "util/Texture.hpp"
 #include "util/Randomizer.hpp"
-#include "Player.hpp"
 #include <camera.hpp>
 #include <entities.hpp>
 #include <memory>
+
+class Player;
 
 class Decoration : public GameFr::Entity2D{
 	std::shared_ptr<Util::Texture> texture;

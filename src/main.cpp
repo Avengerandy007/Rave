@@ -1,10 +1,14 @@
+#include "GameManager.hpp"
+#include "util/Globals.hpp"
 #include "util/Texture.hpp"
 #include "util/TextureArrays.hpp"
-#include "GameManager.hpp"
+#include <event.hpp>
+#include <memory>
 #include <raylib.h>
 
 std::array<std::shared_ptr<Util::Texture>, 2> Util::TextureArrays::decorations;
 std::array<std::shared_ptr<Util::Texture>, 1> Util::TextureArrays::enemies;
+GameFr::EventQueue Global::eventQueue;
 
 void InitTextureArrays(){
 	namespace TA = Util::TextureArrays;
