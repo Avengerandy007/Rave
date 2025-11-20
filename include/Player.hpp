@@ -2,6 +2,7 @@
 #include "util/Texture.hpp"
 #include "entities.hpp"
 #include <camera.hpp>
+#include "Decoration.hpp"
 #include <util/vectors.hpp>
 
 namespace GF = GameFr;
@@ -14,6 +15,7 @@ class Player : public GF::Entity2D{
 	std::shared_ptr<GF::Camera2D> camera;
 	void Move();
 	void Collide();
+	void StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other);
 
 public:
 	GF::Vector2 direction;

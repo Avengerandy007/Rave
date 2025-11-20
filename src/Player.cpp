@@ -1,7 +1,6 @@
 #include "Player.hpp"
 #include "Decoration.hpp"
 #include "util/Globals.hpp"
-#include <iostream>
 #include <memory>
 
 Player::Player(){
@@ -24,10 +23,15 @@ void Player::Move(){
 	}if (IsKeyDown(KEY_D)){
 		direction.X = 1;
 	}
-	if (IsKeyDown(KEY_LEFT_SHIFT)) speed = 5;
-	else speed = 1;
+	if (IsKeyDown(KEY_LEFT_SHIFT) && speed != 5) speed = 5;
+	else if (speed != 1) speed = 1;
+}
 
-	Push(direction, speed);
+void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other){
+	if (other->position.X < position.X && direction.X == -1) direction.X = 0;
+	else if (other->position.X > position.X && direction.X == 1) direction.X = 0;
+	if (other->position.Y < position.Y && direction.Y == -1) direction.Y = 0;
+	else if (other->position.Y > position.Y && direction.Y == 1) direction.Y = 0;
 }
 
 void Player::Collide(){
@@ -38,11 +42,9 @@ void Player::Collide(){
 	}
 
 	if (ev->type == GameFr::Event::Types::COLLISION){
-		std::cout << "COLLIDED\n";
 		auto sender = std::dynamic_pointer_cast<const Decoration>(ev->sender);
 		if (sender){
-			std::cout << "COLLIDED WITH DECORATION\n";
-			texture.Assign("resources/Wall.png");
+			StopMovementBasedOnDirection(sender);
 		}
 	}
 }
@@ -51,6 +53,7 @@ void Player::Update(){
 	Move();
 	GetRenderingPosition(*camera);
 	Collide();
+	Push(direction, speed);
 	if (onScreen){
 		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
 	}

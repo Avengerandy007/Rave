@@ -6,7 +6,6 @@
 #include <event.hpp>
 #include <memory>
 #include <cmath>
-#include <iostream>
 #include <raylib.h>
 #include "Player.hpp"
 
@@ -25,11 +24,9 @@ void Decoration::DetectCollisions() const{
 		try{
 		const std::shared_ptr<GameFr::Event> ev = std::make_shared<GameFr::Event>(GameFr::Event::Types::COLLISION, GetPtr(), player, dataPoint);
 			if (!ev) throw -1;
-			std::cout << "Created event\n";
 			eventInterface.queue->CreateEvent(ev);
 		}
 		catch(int e){
-			std::cout << "Event ptr nullptr\n";
 			return;
 		}
 	}
