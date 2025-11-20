@@ -3,5 +3,5 @@
 class GameManager;
 namespace Global{
 	const int nrOfDecorations = 25, nrOfEnemies = 100;
-	extern GameFr::EventQueue eventQueue;
+	extern std::shared_ptr<GameFr::EventQueue> eventQueue;
 }

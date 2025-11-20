@@ -1,17 +1,11 @@
 #include "Player.hpp"
-#include "raylib.h"
-#include <camera.hpp>
-#include <entities.hpp>
-#include <event.hpp>
-#include <util/vectors.hpp>
 #include "Decoration.hpp"
 #include "util/Globals.hpp"
 #include <iostream>
+#include <memory>
 
 Player::Player(){
-	std::cout << "Befor event interface\n";
-	eventInterface.AssignQueue(std::make_shared<GameFr::EventQueue>(Global::eventQueue)); 
-	std::cout << "After event interface\n";
+	eventInterface.AssignQueue(Global::eventQueue); 
 }
 
 void Player::SetTexture(){
@@ -36,9 +30,27 @@ void Player::Move(){
 	Push(direction, speed);
 }
 
+void Player::Collide(){
+	const std::shared_ptr<const GameFr::Event> ev = eventInterface.Listen(GetPtr());
+
+	if (!ev) {
+		return;
+	}
+
+	if (ev->type == GameFr::Event::Types::COLLISION){
+		std::cout << "COLLIDED\n";
+		auto sender = std::dynamic_pointer_cast<const Decoration>(ev->sender);
+		if (sender){
+			std::cout << "COLLIDED WITH DECORATION\n";
+			texture.Assign("resources/Wall.png");
+		}
+	}
+}
+
 void Player::Update(){
 	Move();
 	GetRenderingPosition(*camera);
+	Collide();
 	if (onScreen){
 		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
 	}

@@ -1,31 +1,46 @@
 #include "Decoration.hpp"
 #include <camera.hpp>
+#include "util/Globals.hpp"
 #include "util/TextureArrays.hpp"
 #include <cstdlib>
-#include <iostream>
+#include <event.hpp>
 #include <memory>
 #include <cmath>
+#include <iostream>
 #include <raylib.h>
 #include "Player.hpp"
 
 Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-GetScreenWidth(), GetScreenWidth()){
+	eventInterface.AssignQueue(Global::eventQueue);
 	position.X = random.GetRandomNumber();
 	position.Y = random.GetRandomNumber();
 	random.ChangeRange(0, 1);
 	texture = Util::TextureArrays::decorations[random.GetRandomNumber()];
-	if (!texture) std::cout << "WAS NOT ABLE TO ASSIGN TEXTURE\n";
 	player = std::reinterpret_pointer_cast<Player>(camera->entity);
+}
+
+void Decoration::DetectCollisions() const{
+	if (CollidingCircle(*player, 50)){
+		GameFr::Util::EventDataPoint dataPoint(position, std::array<int, 10>());
+		try{
+		const std::shared_ptr<GameFr::Event> ev = std::make_shared<GameFr::Event>(GameFr::Event::Types::COLLISION, GetPtr(), player, dataPoint);
+			if (!ev) throw -1;
+			std::cout << "Created event\n";
+			eventInterface.queue->CreateEvent(ev);
+		}
+		catch(int e){
+			std::cout << "Event ptr nullptr\n";
+			return;
+		}
+	}
 }
 
 void Decoration::Update(){
 	Regenerate();
-	std::cout << "Regenerated\n";
 	GetRenderingPosition(*camera);
-	std::cout << "Rendered position\n";
+	DetectCollisions();
 	if (onScreen && texture){
-		std::cout << "Drawing\n";
 		DrawTexture(texture->texture, renderingPostion.X, renderingPostion.Y, WHITE);
-		std::cout << "Drawed\n";
 	}
 }
 

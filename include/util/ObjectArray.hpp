@@ -7,7 +7,7 @@
 namespace Util{
 	template<uint32_t n>
 	struct ObjectArray{
-		std::array<std::unique_ptr<GameFr::Entity2D>, n> array;
+		std::array<std::shared_ptr<GameFr::Entity2D>, n> array;
 		void UpdateAll(){
 			for (auto& entity : array){
 				entity->Update();

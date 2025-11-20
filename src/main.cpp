@@ -8,7 +8,7 @@
 
 std::array<std::shared_ptr<Util::Texture>, 2> Util::TextureArrays::decorations;
 std::array<std::shared_ptr<Util::Texture>, 1> Util::TextureArrays::enemies;
-GameFr::EventQueue Global::eventQueue;
+std::shared_ptr<GameFr::EventQueue> Global::eventQueue;
 
 void InitTextureArrays(){
 	namespace TA = Util::TextureArrays;
@@ -26,6 +26,7 @@ int main(){
 	InitWindow(GetScreenWidth(), GetScreenHeight(), "Rave");
 	ToggleBorderlessWindowed();
 	InitTextureArrays();
+	Global::eventQueue = std::make_shared<GameFr::EventQueue>();
 	GameManager game;
 	game.InitEntities();
 	while (!WindowShouldClose()){

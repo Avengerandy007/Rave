@@ -7,10 +7,10 @@
 
 GameManager::GameManager() : player(std::make_shared<Player>()), camera(std::make_shared<GameFr::Camera2D>(GameFr::Camera2D::Modes::FOLLOW, player, GetScreenWidth(), GetScreenHeight())){
 	for (auto& a : decorations.array){
-		a = std::make_unique<Decoration>(camera);
+		a = std::make_shared<Decoration>(camera);
 	}
 	for(auto& a : enemies.array){
-		a = std::make_unique<Enemy>(player, camera);
+		a = std::make_shared<Enemy>(player, camera);
 	}
 }
 

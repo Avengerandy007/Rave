@@ -13,6 +13,7 @@ class Player : public GF::Entity2D{
 	Util::Texture texture;
 	std::shared_ptr<GF::Camera2D> camera;
 	void Move();
+	void Collide();
 
 public:
 	GF::Vector2 direction;
