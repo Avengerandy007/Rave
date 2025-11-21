@@ -29,11 +29,10 @@ class Entity2D;
 	struct EventQueue{
 		std::vector<std::shared_ptr<const Event>> queue;
 		void CreateEvent(std::shared_ptr<const Event> event);
-		uint64_t qp = 0; //queue pointer
 	};
 
 	class EventInterface{
-		uint64_t localQp = 0;
+		uint64_t qp = 0;
 	public:
 		std::shared_ptr<EventQueue> queue;
 		EventInterface();

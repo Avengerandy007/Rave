@@ -16,6 +16,7 @@ class Player : public GF::Entity2D{
 	void Move();
 	void Collide();
 	void StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other);
+	void Died();
 
 public:
 	GF::Vector2 direction;

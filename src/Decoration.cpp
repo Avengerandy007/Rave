@@ -1,12 +1,6 @@
 #include "Decoration.hpp"
-#include <camera.hpp>
-#include "util/Globals.hpp"
+#include "GameManager.hpp"
 #include "util/TextureArrays.hpp"
-#include <cstdlib>
-#include <event.hpp>
-#include <memory>
-#include <cmath>
-#include <raylib.h>
 #include "Player.hpp"
 
 Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-GetScreenWidth(), GetScreenWidth()){
@@ -21,15 +15,20 @@ Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam
 void Decoration::DetectCollisions() const{
 	if (CollidingCircle(*player, 50)){
 		GameFr::Util::EventDataPoint dataPoint(position, std::array<int, 10>());
-		try{
 		const std::shared_ptr<GameFr::Event> ev = std::make_shared<GameFr::Event>(GameFr::Event::Types::COLLISION, GetPtr(), player, dataPoint);
-			if (!ev) throw -1;
+			if (!ev) return;
+			eventInterface.queue->CreateEvent(ev);
+	}
+
+	for (auto enemy : Global::game->enemies.array){
+		if (CollidingCircle(*enemy, 50)){
+			const GameFr::Util::EventDataPoint data(position, {});
+			const std::shared_ptr<const GameFr::Event> ev = std::make_shared<const GameFr::Event>(GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
+			if (!ev) return; 
 			eventInterface.queue->CreateEvent(ev);
 		}
-		catch(int e){
-			return;
-		}
 	}
+
 }
 
 void Decoration::Update(){

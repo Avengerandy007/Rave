@@ -1,7 +1,9 @@
 #include "Player.hpp"
 #include "Decoration.hpp"
+#include "Enemy.hpp"
 #include "util/Globals.hpp"
 #include <memory>
+#include <iostream>
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
@@ -34,19 +36,33 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 	else if (other->position.Y > position.Y && direction.Y == 1) direction.Y = 0;
 }
 
+void Player::Died(){
+	std::cout << "You died\n";
+}
+
 void Player::Collide(){
-	const std::shared_ptr<const GameFr::Event> ev = eventInterface.Listen(GetPtr());
-
-	if (!ev) {
-		return;
-	}
-
-	if (ev->type == GameFr::Event::Types::COLLISION){
-		auto sender = std::dynamic_pointer_cast<const Decoration>(ev->sender);
-		if (sender){
-			StopMovementBasedOnDirection(sender);
+	std::shared_ptr<const GameFr::Event> ev = eventInterface.Listen(GetPtr());
+	if (!ev) return;
+	do{
+		if (ev->type == GameFr::Event::Types::COLLISION){
+			//check collisions with decorations
+			{
+				auto sender = std::dynamic_pointer_cast<const Decoration>(ev->sender);
+				if (sender){
+					StopMovementBasedOnDirection(sender);
+				}
+			}
+			
+			//check collisions with enemies
+			{
+				auto sender = std::dynamic_pointer_cast<const Enemy>(ev->sender);
+				if (sender){
+					Died();
+				}
+			}
 		}
-	}
+		ev = eventInterface.Listen(GetPtr());
+	} while(ev);
 }
 
 void Player::Update(){
