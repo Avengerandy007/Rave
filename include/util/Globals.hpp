@@ -1,5 +1,6 @@
 #pragma once
 #include <event.hpp>
+#include <memory>
 class GameManager;
 namespace Global{
 	const int nrOfDecorations = 25, nrOfEnemies = 100;

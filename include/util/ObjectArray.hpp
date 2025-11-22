@@ -1,7 +1,5 @@
 #pragma once
-#include <array>
 #include <inttypes.h>
-#include <memory>
 #include <entities.hpp>
 
 namespace Util{
@@ -9,7 +7,7 @@ namespace Util{
 	struct ObjectArray{
 		std::array<std::shared_ptr<GameFr::Entity2D>, n> array;
 		void UpdateAll(){
-			for (auto& entity : array){
+			for (std::shared_ptr<GameFr::Entity2D> entity : array){
 				entity->Update();
 			}
 		}

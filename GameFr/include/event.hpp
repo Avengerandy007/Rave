@@ -38,12 +38,14 @@ class Entity2D;
 		EventInterface();
 		EventInterface(const EventInterface& other);
 		std::shared_ptr<const Event> Listen(const std::shared_ptr<const Entity2D> parent);
+		std::shared_ptr<const Event> Listen(const Event::Types desiredType);
 		void AssignQueue(const std::shared_ptr<EventQueue> q);
 	};
 
 	enum struct Event::Types{
 		COLLISION,
 		MOVEMENT,
+		PLAYER_DEATH
 	};
 
 }

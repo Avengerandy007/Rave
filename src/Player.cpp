@@ -2,8 +2,8 @@
 #include "Decoration.hpp"
 #include "Enemy.hpp"
 #include "util/Globals.hpp"
+#include <event.hpp>
 #include <memory>
-#include <iostream>
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
@@ -25,7 +25,7 @@ void Player::Move(){
 	}if (IsKeyDown(KEY_D)){
 		direction.X = 1;
 	}
-	if (IsKeyDown(KEY_LEFT_SHIFT) && speed != 5) speed = 5;
+	if (IsKeyDown(KEY_LEFT_SHIFT) && speed != 5) speed = 8;
 	else if (speed != 1) speed = 1;
 }
 
@@ -37,7 +37,9 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 }
 
 void Player::Died(){
-	std::cout << "You died\n";
+	GameFr::Util::EventDataPoint data (position, {});
+	GameFr::Event ev(GameFr::Event::Types::PLAYER_DEATH, GetPtr(), nullptr, data);
+	eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 }
 
 void Player::Collide(){
