@@ -44,6 +44,7 @@ class Entity2D;
 
 	enum struct Event::Types{
 		COLLISION,
+		SHOOT,
 		MOVEMENT,
 		PLAYER_DEATH
 	};
