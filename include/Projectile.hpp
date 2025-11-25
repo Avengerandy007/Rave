@@ -8,6 +8,7 @@ class Projectile : public GameFr::Entity2D{
 	GameFr::Randomizer random;
 	const GameFr::Vector2 targetDirection;
 	Projectile(Types t, GameFr::Vector2& target);
+	void Update() override;
 };
 
 enum struct Projectile::Types{
