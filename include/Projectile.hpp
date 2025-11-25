@@ -6,7 +6,7 @@ class Projectile : public GameFr::Entity2D{
 	const Types type;
 	int speed;
 	GameFr::Randomizer random;
-	const GameFr::Vector2 targetPositon;
+	const GameFr::Vector2 targetDirection;
 	Projectile(Types t, GameFr::Vector2& target);
 };
 
