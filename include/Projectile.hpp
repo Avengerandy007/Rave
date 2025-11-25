@@ -3,10 +3,11 @@
 
 class Projectile : public GameFr::Entity2D{
 	enum struct Types;
-	Types type;
+	const Types type;
 	int speed;
 	GameFr::Randomizer random;
-	GameFr::Vector2 targetPositon;
+	const GameFr::Vector2 targetPositon;
+	Projectile(Types t, GameFr::Vector2& target);
 };
 
 enum struct Projectile::Types{
