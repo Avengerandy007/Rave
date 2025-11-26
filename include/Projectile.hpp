@@ -1,23 +1,30 @@
 #include <entities.hpp>
 #include <util/Randomizer.hpp>
-
-class ProjectileFactory{
-	GameFr::EventInterface eventInterface;
-	void Update();
-};
+#include <vector>
 
 class Projectile : public GameFr::Entity2D{
+public:
 	enum struct Types;
+	Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition);
+	Projectile(const Projectile& other);
+private:
 	const Types type;
 	int speed;
 	GameFr::Randomizer random;
 	GameFr::Vector2 targetDirection;
-	Projectile(Types t, GameFr::Vector2& target, GameFr::Vector2& position);
 	void Update() override;
 };
 
 enum struct Projectile::Types{
-	IDK1,
-	IDK2,
-	IDK3
+	IDK1 = 0,
+	IDK2 = 1,
+	IDK3 = 2
+};
+
+class ProjectileFactory{
+	GameFr::EventInterface eventInterface;
+	std::vector<std::shared_ptr<Projectile>> projectileList;
+public:
+	ProjectileFactory();
+	void Update();
 };
