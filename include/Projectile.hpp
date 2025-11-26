@@ -12,7 +12,7 @@ class Projectile : public GameFr::Entity2D{
 	int speed;
 	GameFr::Randomizer random;
 	GameFr::Vector2 targetDirection;
-	Projectile(Types t, GameFr::Vector2& target);
+	Projectile(Types t, GameFr::Vector2& target, GameFr::Vector2& position);
 	void Update() override;
 };
 
