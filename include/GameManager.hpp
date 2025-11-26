@@ -3,6 +3,7 @@
 #include "Player.hpp"
 #include "util/ObjectArray.hpp"
 #include "util/Globals.hpp"
+#include "Projectile.hpp"
 #include <event.hpp>
 #include <memory>
 
@@ -15,6 +16,7 @@ public:
 	std::shared_ptr<GameFr::Camera2D> camera;
 	Util::ObjectArray<Global::nrOfDecorations> decorations;
 	Util::ObjectArray<Global::nrOfEnemies> enemies;
+	ProjectileFactory projectileFactory;
 	void Update();
 	GameManager();
 	void InitEntities();

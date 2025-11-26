@@ -5,6 +5,7 @@
 #include "util/Globals.hpp"
 #include "util/TextureArrays.hpp"
 #include <raylib.h>
+#include <util/vectors.hpp>
 
 Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(2, 5){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -59,10 +60,20 @@ void Enemy::Move(){
 	}
 }
 
+void Enemy::ShootAtPlayer(){
+	random.ChangeRange(0, 1);
+	if (random.GetRandomNumber() == 0){
+		GameFr::Util::EventDataPoint data(GameFr::Vector2::GetDiference(position, player->position), {0});
+		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
+		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+	}
+}
+
 void Enemy::Update(){
 	GetRenderingPosition(*camera);
 	if (onScreen) DrawTexture(texture->texture, renderingPostion.X, renderingPostion.Y, WHITE);
 	Move();
 	Collide();
 	Push(direction, speed);
+	ShootAtPlayer();
 }

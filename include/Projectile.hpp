@@ -7,12 +7,12 @@ public:
 	enum struct Types;
 	Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition);
 	Projectile(const Projectile& other);
+	void Update() override;
 private:
 	const Types type;
 	int speed;
 	GameFr::Randomizer random;
 	GameFr::Vector2 targetDirection;
-	void Update() override;
 };
 
 enum struct Projectile::Types{
@@ -23,8 +23,8 @@ enum struct Projectile::Types{
 
 class ProjectileFactory{
 	GameFr::EventInterface eventInterface;
-	std::vector<std::shared_ptr<Projectile>> projectileList;
 public:
+	std::vector<std::shared_ptr<Projectile>> projectileList;
 	ProjectileFactory();
 	void Update();
 };

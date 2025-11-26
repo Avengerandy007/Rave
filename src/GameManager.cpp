@@ -34,6 +34,7 @@ void GameManager::Update(){
 
 	decorations.UpdateAll();
 	enemies.UpdateAll();
+	projectileFactory.Update();
 	player->Update();
 	camera->Update();
 	ListenForEvents();

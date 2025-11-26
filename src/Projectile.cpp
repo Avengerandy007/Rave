@@ -1,6 +1,7 @@
 #include "Projectile.hpp"
 #include "util/Globals.hpp"
 #include <util/vectors.hpp>
+#include <iostream>
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -11,6 +12,10 @@ void ProjectileFactory::Update(){
 	if (ev){
 		Projectile project = Projectile((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position);
 		projectileList.push_back(std::make_shared<Projectile>(project));
+	}
+
+	for (auto projectile : projectileList){
+		projectile->Update();
 	}
 }
 
@@ -26,6 +31,7 @@ Projectile::Projectile(const Projectile::Types t, const GameFr::Vector2 target, 
 	position = startingPosition;
 	speed = random.GetRandomNumber();
 	targetDirection.Normalize();
+	std::cout << "CREATED PROJECTILE\n";
 }
 
 void Projectile::Update(){
