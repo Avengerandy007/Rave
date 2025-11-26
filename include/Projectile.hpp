@@ -1,6 +1,11 @@
 #include <entities.hpp>
 #include <util/Randomizer.hpp>
 
+class ProjectileFactory{
+	GameFr::EventInterface eventInterface;
+	void Update();
+};
+
 class Projectile : public GameFr::Entity2D{
 	enum struct Types;
 	const Types type;
