@@ -3,6 +3,7 @@
 #include "util/TextureArrays.hpp"
 #include "GameManager.hpp"
 #include <chrono>
+#include <event.hpp>
 #include <util/vectors.hpp>
 #include <iostream>
 
@@ -14,18 +15,19 @@ void ProjectileFactory::Update(){
 	auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 	while (ev){
 		Projectile project = Projectile((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera);
-		projectileList.push_back(std::make_shared<Projectile>(project));
-
-		for (size_t i = 0; i < projectileList.size(); i++){
-			auto& projectile = projectileList[i];
-			projectile->Update();
-			if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(10)){
-				projectileList.erase(projectileList.begin() + i);
-			}
+		if (projectileList.size() >= 600) {
+			projectileList.erase(projectileList.begin());
 		}
-
-		if (projectileList.size() >= 10000) projectileList.clear();
+		projectileList.emplace_back(std::make_shared<Projectile>(project));
+		std::cout << "[CURRENT AMMOUNT: " << projectileList.size() << "]\n";
 		ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
+	}
+	for (size_t i = 0; i < projectileList.size(); i++){
+		auto& projectile = projectileList[i];
+		if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(5)){
+			projectileList.erase(projectileList.begin() + i);
+		}
+		projectileList[i]->Update();
 	}
 }
 
@@ -45,7 +47,7 @@ Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr
 	speed = random.GetRandomNumber();
 	targetDirection.Normalize();
 	texture = Util::TextureArrays::decorations[1];
-	std::cout << "[" << creationTime << "]: CREATED PROJECTILE\n";
+	std::cout << "[" << creationTime << "]: CREATED PROJECTILE ";
 	
 }
 

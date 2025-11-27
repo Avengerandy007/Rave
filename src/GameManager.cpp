@@ -1,6 +1,8 @@
 #include "GameManager.hpp"
 #include "Enemy.hpp"
 #include "Decoration.hpp"
+#include "util/Globals.hpp"
+#include "util/ObjectArray.hpp"
 
 GameManager::GameManager() : player(std::make_shared<Player>()), camera(std::make_shared<GameFr::Camera2D>(GameFr::Camera2D::Modes::FOLLOW, player, GetScreenWidth(), GetScreenHeight())){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -23,6 +25,7 @@ void GameManager::ListenForEvents(){
 		if (ev){
 			player->position = GameFr::Vector2();
 			SetObjectArrays();
+			projectileFactory.projectileList.clear();
 		}
 	}
 
@@ -32,9 +35,9 @@ void GameManager::Update(){
 	BeginDrawing();
 	ClearBackground(WHITE);
 
+	projectileFactory.Update();
 	decorations.UpdateAll();
 	enemies.UpdateAll();
-	projectileFactory.Update();
 	player->Update();
 	camera->Update();
 	ListenForEvents();

@@ -5,6 +5,7 @@
 #include <entities.hpp>
 #include <util/Randomizer.hpp>
 #include <vector>
+#include <thread>
 
 class Projectile : public GameFr::Entity2D{
 public:
