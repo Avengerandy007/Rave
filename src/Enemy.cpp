@@ -61,9 +61,9 @@ void Enemy::Move(){
 }
 
 void Enemy::ShootAtPlayer(){
-	random.ChangeRange(0, 1);
-	if (random.GetRandomNumber() == 0){
-		GameFr::Util::EventDataPoint data(GameFr::Vector2::GetDiference(position, player->position), {0});
+	random.ChangeRange(0, 50);
+	if (random.GetRandomNumber() == 1){
+		GameFr::Util::EventDataPoint data(GameFr::Vector2::GetDiference(player->position, position), {0});
 		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 	}
