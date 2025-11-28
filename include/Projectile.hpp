@@ -5,7 +5,7 @@
 #include <entities.hpp>
 #include <util/Randomizer.hpp>
 #include <vector>
-#include <thread>
+#include "Player.hpp"
 
 class Projectile : public GameFr::Entity2D{
 public:
@@ -16,6 +16,8 @@ public:
 	const std::chrono::system_clock::time_point creationTime;
 private:
 	std::shared_ptr<Util::Texture> texture;
+	void Collide();
+	const std::shared_ptr<Player> player;
 	const Types type;
 	int speed;
 	std::shared_ptr<GameFr::Camera2D> camera;

@@ -4,6 +4,7 @@
 #include "util/Globals.hpp"
 #include <event.hpp>
 #include <memory>
+#include "Projectile.hpp"
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
@@ -58,6 +59,13 @@ void Player::Collide(){
 			//check collisions with enemies
 			{
 				auto sender = std::dynamic_pointer_cast<const Enemy>(ev->sender);
+				if (sender){
+					Died();
+				}
+			}
+			//check collisions with projectiles
+			{
+				auto sender = std::dynamic_pointer_cast<const Projectile>(ev->sender);
 				if (sender){
 					Died();
 				}

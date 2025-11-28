@@ -28,7 +28,7 @@ class Entity2D;
 
 	struct EventQueue{
 		std::vector<std::shared_ptr<const Event>> queue;
-		void CreateEvent(std::shared_ptr<const Event> event);
+		void CreateEvent(const std::shared_ptr<const Event>& event);
 	};
 
 	class EventInterface{
