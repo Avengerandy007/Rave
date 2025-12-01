@@ -43,7 +43,8 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 void Player::Shoot(){
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - lastShot >= std::chrono::milliseconds(500)){
 		GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
-		GameFr::Util::EventDataPoint data(mousePosition, {0, (int)Projectile::Senders::PLAYER});
+		GameFr::Vector2 projectileDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y);
+		GameFr::Util::EventDataPoint data(projectileDirection, {0, (int)Projectile::Senders::PLAYER, 10});
 		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 	}

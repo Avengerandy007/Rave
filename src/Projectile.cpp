@@ -17,8 +17,10 @@ void ProjectileFactory::Update(){
 		if (projectileList.size() >= 600) {
 			projectileList.erase(projectileList.begin());
 		}
-		projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]));
-		std::clog << "[CURRENT AMMOUNT: " << projectileList.size() << "]\n";
+		if (ev->dataPoint.additionalData[2] == 0)
+			projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]));
+		else
+			projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]));
 		ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 	}
 	for (size_t i = 0; i < projectileList.size(); i++){
@@ -47,8 +49,15 @@ Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr
 	speed = random.GetRandomNumber();
 	targetDirection.Normalize();
 	texture = Util::TextureArrays::decorations[1];
-	std::clog << "[" << creationTime << "]: CREATED PROJECTILE ";
-	
+}
+
+Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send, const int p_Speed) : type(t), targetDirection(target), random(4, 7), creationTime(std::chrono::system_clock::now()), player(Global::game->player), sender(send){
+	eventInterface.AssignQueue(Global::eventQueue);
+	position = startingPosition;
+	camera = cam;
+	speed = p_Speed;
+	targetDirection.Normalize();
+	texture = Util::TextureArrays::decorations[1];
 }
 
 void Projectile::Collide(){
@@ -56,7 +65,7 @@ void Projectile::Collide(){
 		std::clog << "\n[" << std::chrono::system_clock::now() << "]: PLAYER COLLIDED WITH PROJECTILE\n";
 		GameFr::Util::EventDataPoint data(position, {});
 		GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
-		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev)); //push_back causes sigsev for some reason
+		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 	}
 }
 

@@ -11,6 +11,7 @@ class Projectile : public GameFr::Entity2D{ public:
 	enum struct Types;
 	enum struct Senders;
 	Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send);
+	Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send, const int p_Speed);
 	Projectile(const Projectile& other);
 	void Update() override;
 private:
