@@ -18,7 +18,7 @@ void ProjectileFactory::Update(){
 			projectileList.erase(projectileList.begin());
 		}
 		projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera));
-		std::clog << "[CURRENT AMMOUNT: " << projectileList.size() << "]\n";
+		//std::clog << "[CURRENT AMMOUNT: " << projectileList.size() << "]\n";
 		ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 	}
 	for (size_t i = 0; i < projectileList.size(); i++){
@@ -47,7 +47,7 @@ Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr
 	speed = random.GetRandomNumber();
 	targetDirection.Normalize();
 	texture = Util::TextureArrays::decorations[1];
-	std::clog << "\n[" << creationTime << "]: CREATED PROJECTILE ";
+	//std::clog << "[" << creationTime << "]: CREATED PROJECTILE ";
 	
 }
 

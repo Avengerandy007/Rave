@@ -45,8 +45,7 @@ void Player::Died(){
 
 void Player::Collide(){
 	std::shared_ptr<const GameFr::Event> ev = eventInterface.Listen(GetPtr());
-	if (!ev) return;
-	do{
+	while(ev){
 		if (ev->type == GameFr::Event::Types::COLLISION){
 			//check collisions with decorations
 			{
@@ -72,7 +71,7 @@ void Player::Collide(){
 			}
 		}
 		ev = eventInterface.Listen(GetPtr());
-	} while(ev);
+	}
 }
 
 void Player::Update(){
