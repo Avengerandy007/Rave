@@ -3,6 +3,7 @@
 #include "entities.hpp"
 #include <camera.hpp>
 #include "Decoration.hpp"
+#include <chrono>
 #include <util/vectors.hpp>
 
 namespace GF = GameFr;
@@ -10,11 +11,13 @@ namespace GF = GameFr;
 class GameManager;
 
 class Player : public GF::Entity2D{
+	std::chrono::system_clock::time_point lastShot;
 	float speed = 1;
 	Util::Texture texture;
 	std::shared_ptr<GF::Camera2D> camera;
 	void Move();
 	void Collide();
+	void Shoot();
 	void StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other);
 	void Died();
 

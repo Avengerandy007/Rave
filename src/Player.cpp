@@ -2,9 +2,12 @@
 #include "Decoration.hpp"
 #include "Enemy.hpp"
 #include "util/Globals.hpp"
+#include <chrono>
 #include <event.hpp>
 #include <memory>
 #include "Projectile.hpp"
+#include <raylib.h>
+#include <util/vectors.hpp>
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
@@ -35,6 +38,15 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 	else if (other->position.X > position.X && direction.X == 1) direction.X = 0;
 	if (other->position.Y < position.Y && direction.Y == -1) direction.Y = 0;
 	else if (other->position.Y > position.Y && direction.Y == 1) direction.Y = 0;
+}
+
+void Player::Shoot(){
+	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - lastShot >= std::chrono::milliseconds(500)){
+		GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
+		GameFr::Util::EventDataPoint data(mousePosition, {0, (int)Projectile::Senders::PLAYER});
+		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
+		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+	}
 }
 
 void Player::Died(){
@@ -79,6 +91,7 @@ void Player::Update(){
 	GetRenderingPosition(*camera);
 	Collide();
 	Push(direction, speed);
+	Shoot();
 	if (onScreen){
 		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
 	}
