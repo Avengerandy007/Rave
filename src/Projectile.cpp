@@ -14,7 +14,7 @@ ProjectileFactory::ProjectileFactory(){
 void ProjectileFactory::Update(){
 	auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 	while (ev){
-		if (projectileList.size() >= 600) {
+		if (projectileList.size() >= 1500) {
 			projectileList.erase(projectileList.begin());
 		}
 		if (ev->dataPoint.additionalData[2] == 0)
