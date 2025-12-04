@@ -11,6 +11,7 @@ class Enemy : public GameFr::Entity2D{
 	void Collide();
 	void StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other);
 	void ShootAtPlayer();
+	void Respawn();
 public:
 	Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam);
 	void Update() override;

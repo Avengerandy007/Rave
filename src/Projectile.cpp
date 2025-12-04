@@ -4,6 +4,7 @@
 #include "GameManager.hpp"
 #include <chrono>
 #include <event.hpp>
+#include <memory>
 #include <util/vectors.hpp>
 #include <iostream>
 
@@ -12,23 +13,34 @@ ProjectileFactory::ProjectileFactory(){
 }
 
 void ProjectileFactory::Update(){
-	auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
-	while (ev){
-		if (projectileList.size() >= 1500) {
-			projectileList.erase(projectileList.begin());
+	{
+		auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
+		while (ev){
+			if (projectileList.size() >= 1500) {
+				projectileList.erase(projectileList.begin());
+			}
+			if (ev->dataPoint.additionalData[2] == 0)
+				projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]));
+			else
+				projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]));
+			ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 		}
-		if (ev->dataPoint.additionalData[2] == 0)
-			projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]));
-		else
-			projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]));
-		ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
+		for (size_t i = 0; i < projectileList.size(); i++){
+			auto& projectile = projectileList[i];
+			if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(5)){
+				projectileList.erase(projectileList.begin() + i);
+			}
+			projectileList[i]->Update();
+		}
 	}
-	for (size_t i = 0; i < projectileList.size(); i++){
-		auto& projectile = projectileList[i];
-		if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(5)){
-			projectileList.erase(projectileList.begin() + i);
+	{
+		auto ev = eventInterface.Listen(GameFr::Event::Types::COLLISION);
+		if (ev){
+			auto sender = std::dynamic_pointer_cast<const Projectile>(ev->sender);
+			if (sender){
+				projectileList.erase(std::find(projectileList.begin(), projectileList.end(), sender));
+			}
 		}
-		projectileList[i]->Update();
 	}
 }
 
@@ -62,10 +74,20 @@ Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr
 
 void Projectile::Collide(){
 	if (CollidingCircle(*player, 50) && sender != Senders::PLAYER){
-		std::clog << "\n[" << std::chrono::system_clock::now() << "]: PLAYER COLLIDED WITH PROJECTILE\n";
+		std::clog << "[" << std::chrono::system_clock::now() << "]: PLAYER COLLIDED WITH PROJECTILE\n";
 		GameFr::Util::EventDataPoint data(position, {});
 		GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+	}
+	if (sender == Senders::PLAYER){
+		for (auto& enemy : Global::game->enemies.array){
+			if (CollidingCircle(*enemy, 50)){
+				std::clog << "[" << std::chrono::system_clock::now() << "]: ENEMY COLLIDED WITH PROJECTILE\n";
+				GameFr::Util::EventDataPoint data(position, {});
+				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
+				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+			}
+		}
 	}
 }
 
