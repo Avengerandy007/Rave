@@ -1,5 +1,6 @@
 #include "Enemy.hpp"
 #include <camera.hpp>
+#include <chrono>
 #include <event.hpp>
 #include <memory>
 #include "Projectile.hpp"
@@ -21,6 +22,9 @@ void Enemy::Respawn(){
 	position.X = random.GetRandomNumber();
 	random.ChangeRange(player->position.Y - GetScreenHeight(), player->position.Y);
 	position.Y = random.GetRandomNumber();
+
+	random.ChangeRange(1, 10);
+	shootInterval = std::chrono::seconds(random.GetRandomNumber());
 }
 
 void Enemy::Collide(){
@@ -73,11 +77,11 @@ void Enemy::Move(){
 }
 
 void Enemy::ShootAtPlayer(){
-	random.ChangeRange(0, 50);
-	if (random.GetRandomNumber() == 10){
+	if (std::chrono::system_clock::now() - lastShot >= shootInterval){
 		GameFr::Util::EventDataPoint data(GameFr::Vector2::GetDiference(player->position, position), {0});
 		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+		lastShot = std::chrono::system_clock::now();
 	}
 }
 

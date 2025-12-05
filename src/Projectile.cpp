@@ -27,7 +27,7 @@ void ProjectileFactory::Update(){
 		}
 		for (size_t i = 0; i < projectileList.size(); i++){
 			auto& projectile = projectileList[i];
-			if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(5)){
+			if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(10)){
 				projectileList.erase(projectileList.begin() + i);
 			}
 			projectileList[i]->Update();
