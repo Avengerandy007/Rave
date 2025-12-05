@@ -4,7 +4,6 @@
 #include "util/ObjectArray.hpp"
 #include "util/Globals.hpp"
 #include "Projectile.hpp"
-#include "util/collisionManager.hpp"
 #include <event.hpp>
 #include <memory>
 
