@@ -73,6 +73,16 @@ Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr
 }
 
 void Projectile::Collide(){
+
+	for (auto& decoration : Global::game->decorations.array){
+		if (CollidingCircle(*decoration, 50)){
+			std::clog << "[" << std::chrono::system_clock::now() << "]: DECORATION COLLIDED WITH PROJECTILE\n";
+			GameFr::Util::EventDataPoint data(position, {});
+			GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), decoration, data);
+			eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+		}
+	}
+
 	if (CollidingCircle(*player, 50) && sender != Senders::PLAYER){
 		std::clog << "[" << std::chrono::system_clock::now() << "]: PLAYER COLLIDED WITH PROJECTILE\n";
 		GameFr::Util::EventDataPoint data(position, {});
