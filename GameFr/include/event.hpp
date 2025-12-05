@@ -3,7 +3,6 @@
 #include <cstdint>
 #include "util/vectors.hpp"
 #include <memory>
-#include <vector>
 
 namespace GameFr{
 class Entity2D;
@@ -27,8 +26,9 @@ class Entity2D;
 	};
 
 	struct EventQueue{
-		std::vector<std::shared_ptr<const Event>> queue;
+		std::array<std::shared_ptr<const Event>, 10000> queue;
 		void CreateEvent(const std::shared_ptr<const Event>& event);
+		uint64_t qp = 0;
 	};
 
 	class EventInterface{

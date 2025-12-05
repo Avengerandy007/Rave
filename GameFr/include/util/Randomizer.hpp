@@ -5,7 +5,7 @@ namespace GameFr{
 	class Randomizer{
 		std::random_device rd;
 		std::mt19937 gen;
-		std::uniform_int_distribution<int> distrib;
+		int minimum, maximum;
 	public:
 		Randomizer(int min, int max);
 		Randomizer(const Randomizer& other);
