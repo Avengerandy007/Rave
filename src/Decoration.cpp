@@ -47,7 +47,7 @@ void Decoration::Regenerate(){
 		if (player->direction.X >= 0){
 			random.ChangeRange((int)(player->position.X + camera->resolutionX), (int)(player->position.X  + (camera->resolutionX + 300)));
 		}else{
-			random.ChangeRange((int)(player->position.X + -1 * (camera->resolutionX + 300)), (int)(player->position.X  + -1 * camera->resolutionX));
+			random.ChangeRange((int)(player->position.X - (camera->resolutionX + 300)), (int)(player->position.X - camera->resolutionX));
 		}
 		position.X = random.GetRandomNumber();
 		random.ChangeRange(0, 1);
@@ -59,7 +59,7 @@ void Decoration::Regenerate(){
 		if (player->direction.Y >= 0) {
 			random.ChangeRange((int)(player->position.Y +  camera->resolutionY), (int)(player->position.Y +  (camera->resolutionY + 300)));
 		} else {
-			random.ChangeRange((int)(player->position.Y + -1 * (camera->resolutionY + 300)), (int)(player->position.Y + -1 * camera->resolutionY));
+			random.ChangeRange((int)(player->position.Y - (camera->resolutionY + 300)), (int)(player->position.Y - camera->resolutionY));
 		}
 		position.Y = random.GetRandomNumber();
 		random.ChangeRange(0, 1);
