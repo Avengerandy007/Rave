@@ -6,7 +6,6 @@
 #include <event.hpp>
 #include <memory>
 #include <util/vectors.hpp>
-#include <iostream>
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -76,7 +75,6 @@ void Projectile::Collide(){
 
 	for (auto& decoration : Global::game->decorations.array){
 		if (CollidingCircle(*decoration, 50)){
-			std::clog << "[" << std::chrono::system_clock::now() << "]: DECORATION COLLIDED WITH PROJECTILE\n";
 			GameFr::Util::EventDataPoint data(position, {});
 			GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), decoration, data);
 			eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
@@ -84,7 +82,6 @@ void Projectile::Collide(){
 	}
 
 	if (CollidingCircle(*player, 50) && sender != Senders::PLAYER){
-		std::clog << "[" << std::chrono::system_clock::now() << "]: PLAYER COLLIDED WITH PROJECTILE\n";
 		GameFr::Util::EventDataPoint data(position, {});
 		GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
@@ -92,7 +89,6 @@ void Projectile::Collide(){
 	if (sender == Senders::PLAYER){
 		for (auto& enemy : Global::game->enemies.array){
 			if (CollidingCircle(*enemy, 50)){
-				std::clog << "[" << std::chrono::system_clock::now() << "]: ENEMY COLLIDED WITH PROJECTILE\n";
 				GameFr::Util::EventDataPoint data(position, {});
 				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
