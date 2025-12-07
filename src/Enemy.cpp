@@ -7,6 +7,7 @@
 #include "util/Globals.hpp"
 #include "util/TextureArrays.hpp"
 #include <raylib.h>
+#include <util/GFmath.hpp>
 #include <util/vectors.hpp>
 
 Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(2, 5){
@@ -92,4 +93,7 @@ void Enemy::Update(){
 	Collide();
 	Push(direction, speed);
 	ShootAtPlayer();
+	if (GameFr::Vector2::GetDistance(position, player->position) >= GameFr::Util::Math::Pythagorean(GetScreenHeight(), GetScreenWidth())){
+		Respawn();
+	}
 }
