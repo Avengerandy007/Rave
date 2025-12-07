@@ -41,7 +41,7 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 }
 
 void Player::Shoot(){
-	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - lastShot >= std::chrono::milliseconds(500)){
+	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - lastShot >= std::chrono::milliseconds(200)){
 		GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
 		GameFr::Vector2 projectileDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y); //Convert from camera's cartesian system to game and then get vector connecting them
 		GameFr::Util::EventDataPoint data(projectileDirection, {0, (int)Projectile::Senders::PLAYER, 20});
