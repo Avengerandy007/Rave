@@ -18,9 +18,9 @@ Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) 
 }
 
 void Enemy::Respawn(){
-	random.ChangeRange(player->position.X - GetScreenWidth(), player->position.X);
+	random.ChangeRange(player->position.X - GetScreenWidth(), player->position.X + GetScreenWidth());
 	position.X = random.GetRandomNumber();
-	random.ChangeRange(player->position.Y - GetScreenHeight(), player->position.Y);
+	random.ChangeRange(player->position.Y - GetScreenHeight(), player->position.Y + GetScreenHeight());
 	position.Y = random.GetRandomNumber();
 
 	random.ChangeRange(1, 10);
