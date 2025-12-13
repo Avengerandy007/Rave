@@ -12,7 +12,7 @@ class GameManager;
 
 class Player : public GF::Entity2D{
 	std::chrono::system_clock::time_point lastShot;
-	float speed = 1;
+	float speed = 8;
 	Util::Texture texture;
 	std::shared_ptr<GF::Camera2D> camera;
 	void Move();

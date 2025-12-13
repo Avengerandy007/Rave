@@ -29,8 +29,8 @@ void Player::Move(){
 	}if (IsKeyDown(KEY_D)){
 		direction.X = 1;
 	}
-	if (IsKeyDown(KEY_LEFT_SHIFT) && speed != 5) speed = 8;
-	else if (speed != 1) speed = 1;
+	if (IsKeyDown(KEY_LEFT_SHIFT) && speed != 5) speed = 10;
+	else if (speed != 8) speed = 8;
 }
 
 void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other){
