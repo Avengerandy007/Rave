@@ -31,7 +31,7 @@ void ProjectileFactory::Update(){
 			std::clog << "Projectiles: " << projectileList.size() << "\n";
 			if (projectileList.size() >= 700) {
 				std::clog << "["<< std::chrono::system_clock::now() << "] Erasing " << projectileList.size() - 700 << " projectiles\n";
-				projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 700));
+				projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 699));
 				std::clog << "Done\n";
 			}
 		}
