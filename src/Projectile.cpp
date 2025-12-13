@@ -7,7 +7,6 @@
 #include <memory>
 #include <util/vectors.hpp>
 #include <assert.h>
-#include <iostream>
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -15,12 +14,10 @@ ProjectileFactory::ProjectileFactory(){
 
 void ProjectileFactory::Update(){
 	updating = true;
-	std::clog << "Updating projectile factory\n";
 	{
 		auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 		while (ev){
 			if (projectileList.size() >= 850){
-				std::clog << "WAAAAY TO MANY FUCKING PROJECTILES\n";
 				projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 700));
 			}
 			if (ev->dataPoint.additionalData[2] == 0)
@@ -28,20 +25,15 @@ void ProjectileFactory::Update(){
 			else
 				projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]));
 			ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
-			std::clog << "Projectiles: " << projectileList.size() << "\n";
 			if (projectileList.size() >= 700) {
-				std::clog << "["<< std::chrono::system_clock::now() << "] Erasing " << projectileList.size() - 700 << " projectiles\n";
 				projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 699));
-				std::clog << "Done\n";
 			}
 		}
 		for (size_t i = 0; i < projectileList.size(); i++){
 			auto& projectile = projectileList[i];
 			if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(10)){
 				assert(i < projectileList.size());
-				std::clog << "Old projectile found, deleting at " << i << "\n";
 				projectileList.erase(projectileList.begin() + i);
-				std::clog << "Done\n";
 				i--;
 				continue;
 			}
@@ -53,15 +45,12 @@ void ProjectileFactory::Update(){
 		if (ev){
 			auto sender = std::dynamic_pointer_cast<const Projectile>(ev->sender);
 			if (sender){
-				std::clog << "Projectile collided, deleting\n";
 				//check if original ptr still exitsts in vector
 				auto i = std::find(projectileList.begin(), projectileList.end(), sender);
 				if (projectileList[i - projectileList.begin()]) projectileList.erase(i);
-				std::clog << "Done\n";
 			}
 		}
 	}
-	std::clog << "Projectile factory update finnished\n";
 	updating = false;
 }
 
