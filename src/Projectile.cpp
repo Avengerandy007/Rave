@@ -64,7 +64,7 @@ Projectile::Projectile(const Projectile& other) : type(other.type), random(other
 	texture = other.texture;
 }
 
-Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send) : type(t), targetDirection(target), random(4, 7), creationTime(std::chrono::system_clock::now()), player(Global::game->player), sender(send){
+Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send) : type(t), targetDirection(target), random(8, 16), creationTime(std::chrono::system_clock::now()), player(Global::game->player), sender(send){
 	eventInterface.AssignQueue(Global::eventQueue);
 	position = startingPosition;
 	camera = cam;
