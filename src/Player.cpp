@@ -29,7 +29,8 @@ void Player::Move(){
 	}if (IsKeyDown(KEY_D)){
 		direction.X = 1;
 	}
-	if (IsKeyDown(KEY_LEFT_SHIFT) && speed != 5) speed = 10;
+	if (IsKeyDown(KEY_LEFT_SHIFT)) speed = 10;
+	else if (IsKeyDown(KEY_LEFT_CONTROL)) speed = 4;
 	else if (speed != 8) speed = 8;
 }
 
