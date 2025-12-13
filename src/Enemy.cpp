@@ -68,23 +68,16 @@ void Enemy::Collide(){
 }
 
 void Enemy::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other){
-	if (other->position.X < position.X && direction.X == -1) direction.X = 0;
-	else if (other->position.X > position.X && direction.X == 1) direction.X = 0;
-	if (other->position.Y < position.Y && direction.Y == -1) direction.Y = 0;
-	else if (other->position.Y > position.Y && direction.Y == 1) direction.Y = 0;
+	if (other->position.X < position.X && direction.X < 0) direction.X = 4;
+	else if (other->position.X > position.X && direction.X > 0) direction.X = -4;
+	if (other->position.Y < position.Y && direction.Y < 0) direction.Y = 4;
+	else if (other->position.Y > position.Y && direction.Y > 0) direction.Y = -4;
 }
 
 void Enemy::Move(){
-	if (player->position.X > position.X){
-		direction.X = 1;
-	}else if (player->position.X < position.X){
-		direction.X = -1;
-	}
-	if (player->position.Y > position.Y){
-		direction.Y = 1;
-	}else if (player->position.Y < position.Y){
-		direction.Y = -1;
-	}
+	direction.X = player->position.X - position.X;
+	direction.Y = player->position.Y - position.Y;
+	direction.Normalize();
 }
 
 void Enemy::ShootAtPlayer(){

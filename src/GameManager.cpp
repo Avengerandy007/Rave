@@ -3,7 +3,9 @@
 #include "Decoration.hpp"
 #include "util/Globals.hpp"
 #include "util/ObjectArray.hpp"
+#include <camera.hpp>
 #include <memory>
+#include <thread>
 
 GameManager::GameManager() : player(std::make_shared<Player>()), camera(std::make_shared<GameFr::Camera2D>(GameFr::Camera2D::Modes::FOLLOW, player, GetScreenWidth(), GetScreenHeight())){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -34,7 +36,9 @@ void GameManager::ListenForEvents(){
 				auto deco = std::dynamic_pointer_cast<Decoration>(entity);
 				deco->Update();
 			}
-			projectileFactory.projectileList.clear();
+			while (projectileFactory.updating){
+				
+			}projectileFactory.projectileList.clear();
 		}
 	}
 
@@ -44,12 +48,16 @@ void GameManager::Update(){
 	BeginDrawing();
 	ClearBackground(WHITE);
 
+	std::thread listenForEvents(&GameManager::ListenForEvents, this);
+	enemies.UpdateAll();
 	projectileFactory.Update();
 	decorations.UpdateAll();
-	enemies.UpdateAll();
-	player->Update();
+	std::thread pl(&Player::Update, &*player);
+	//player->Update();
 	camera->Update();
-	ListenForEvents();
+	listenForEvents.join();
+	pl.join();
+	//ListenForEvents();
 
 	EndDrawing();
 }

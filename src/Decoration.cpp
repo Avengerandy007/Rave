@@ -2,6 +2,8 @@
 #include "GameManager.hpp"
 #include "util/TextureArrays.hpp"
 #include "Player.hpp"
+#include <event.hpp>
+#include <util/vectors.hpp>
 
 Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-GetScreenWidth(), GetScreenWidth()){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -12,12 +14,12 @@ Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam
 	player = std::reinterpret_pointer_cast<Player>(camera->entity);
 }
 
-void Decoration::DetectCollisions() const{
+void Decoration::DetectCollisions() {
 	if (CollidingCircle(*player, 50)){
 		GameFr::Util::EventDataPoint dataPoint(position, std::array<int, 10>());
 		const std::shared_ptr<GameFr::Event> ev = std::make_shared<GameFr::Event>(GameFr::Event::Types::COLLISION, GetPtr(), player, dataPoint);
-			if (!ev) return;
-			eventInterface.queue->CreateEvent(ev);
+		if (!ev) return;
+		eventInterface.queue->CreateEvent(ev);
 	}
 
 	for (auto enemy : Global::game->enemies.array){

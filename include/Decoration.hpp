@@ -14,7 +14,7 @@ class Decoration : public GameFr::Entity2D{
 	//Moves this to the front of the player so they can see it again
 	void Regenerate();
 	GameFr::Randomizer random;
-	void DetectCollisions() const;
+	void DetectCollisions();
 public:
 	Decoration(const std::shared_ptr<GameFr::Camera2D> cam);
 	void Update() override;

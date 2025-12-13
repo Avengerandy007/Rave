@@ -44,5 +44,6 @@ class ProjectileFactory{
 public:
 	std::vector<std::shared_ptr<Projectile>> projectileList;
 	ProjectileFactory();
+	bool updating;
 	void Update();
 };

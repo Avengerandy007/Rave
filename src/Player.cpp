@@ -34,10 +34,10 @@ void Player::Move(){
 }
 
 void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other){
-	if (other->position.X < position.X && direction.X == -1) direction.X = 0;
-	else if (other->position.X > position.X && direction.X == 1) direction.X = 0;
-	if (other->position.Y < position.Y && direction.Y == -1) direction.Y = 0;
-	else if (other->position.Y > position.Y && direction.Y == 1) direction.Y = 0;
+	if (other->position.X < position.X && direction.X == -1) direction.X = 1;
+	else if (other->position.X > position.X && direction.X == 1) direction.X = -1;
+	if (other->position.Y < position.Y && direction.Y == -1) direction.Y = 1;
+	else if (other->position.Y > position.Y && direction.Y == 1) direction.Y = -1;
 }
 
 void Player::Shoot(){
