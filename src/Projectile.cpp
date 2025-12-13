@@ -54,7 +54,9 @@ void ProjectileFactory::Update(){
 			auto sender = std::dynamic_pointer_cast<const Projectile>(ev->sender);
 			if (sender){
 				std::clog << "Projectile collided, deleting\n";
-				projectileList.erase(std::find(projectileList.begin(), projectileList.end(), sender));
+				//check if original ptr still exitsts in vector
+				auto i = std::find(projectileList.begin(), projectileList.end(), sender);
+				if (projectileList[i - projectileList.begin()]) projectileList.erase(i);
 				std::clog << "Done\n";
 			}
 		}
