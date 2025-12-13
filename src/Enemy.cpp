@@ -10,15 +10,16 @@
 #include <util/GFmath.hpp>
 #include <util/vectors.hpp>
 
-Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(2, 5){
+Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(5, 12){
 	eventInterface.AssignQueue(Global::eventQueue);
-	speed = random.GetRandomNumber();
 	camera = cam;
 	Respawn();
 	texture = Util::TextureArrays::enemies[0];
 }
 
 void Enemy::Respawn(){
+	random.ChangeRange(5, 12);
+	speed = random.GetRandomNumber();
 	random.ChangeRange(0, 1);
 	if (random.GetRandomNumber() == 1){
 		random.ChangeRange(player->position.X - GetScreenWidth(), player->position.X - (float)GetScreenWidth() / 2);
