@@ -76,9 +76,11 @@ void Enemy::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration>
 }
 
 void Enemy::Move(){
-	GameFr::Vector2 cp = player->position;
-	cp.Normalize();
-	if (direction == cp) return;
+	{
+		GameFr::Vector2 cp = player->position;
+		cp.Normalize();
+		if (direction == cp) return;
+	}
 	direction.X = player->position.X - position.X;
 	direction.Y = player->position.Y - position.Y;
 	direction.Normalize();

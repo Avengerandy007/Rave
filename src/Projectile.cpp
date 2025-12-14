@@ -13,7 +13,6 @@ ProjectileFactory::ProjectileFactory(){
 }
 
 void ProjectileFactory::Update(){
-	updating = true;
 	{
 		auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 		while (ev){
@@ -57,7 +56,6 @@ void ProjectileFactory::Update(){
 			}
 		}
 	}
-	updating = false;
 }
 
 Projectile::Projectile(const Projectile& other) : type(other.type), random(other.random), creationTime(other.creationTime), player(Global::game->player), sender(other.sender){
