@@ -17,17 +17,21 @@ void ProjectileFactory::Update(){
 	{
 		auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 		while (ev){
-			if (projectileList.size() >= 850){
-				projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 700));
+			if (projectileList.size() >= 750){
+				//just give it some rest if there are a lot of shoot events in the queue
+				break;
 			}
-			if (ev->dataPoint.additionalData[2] == 0)
+			if (ev->dataPoint.additionalData[2] == 0){
 				projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]));
-			else
-				projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]));
-			ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
-			if (projectileList.size() >= 700) {
-				projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 699));
 			}
+			else{
+				projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]));
+			}
+			ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
+			
+		}
+		if (projectileList.size() >= 700) {
+			projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 699));
 		}
 		for (size_t i = 0; i < projectileList.size(); i++){
 			auto& projectile = projectileList[i];
@@ -47,7 +51,9 @@ void ProjectileFactory::Update(){
 			if (sender){
 				//check if original ptr still exitsts in vector
 				auto i = std::find(projectileList.begin(), projectileList.end(), sender);
-				if (projectileList[i - projectileList.begin()]) projectileList.erase(i);
+				if (i != projectileList.end()){
+					projectileList.erase(i);
+				}
 			}
 		}
 	}
