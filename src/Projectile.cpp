@@ -66,7 +66,7 @@ Projectile::Projectile(const Projectile& other) : type(other.type), random(other
 	speed = other.speed;
 	position = other.position;
 	targetDirection = other.targetDirection;
-	renderingPostion = other.renderingPostion;
+	renderingPosition = other.renderingPosition;
 	texture = other.texture;
 }
 
@@ -106,7 +106,7 @@ void Projectile::Collide(){
 		}
 	}
 
-	if (CollidingCircle(*player, 30) && sender != Senders::PLAYER){
+	if (CollidingCircle(*player, 100) && sender != Senders::PLAYER){
 		GameFr::Util::EventDataPoint data(position, {});
 		GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
@@ -125,7 +125,7 @@ void Projectile::Collide(){
 void Projectile::Update(){
 	GetRenderingPosition(*camera);
 	if (onScreen) {
-		DrawTextureEx(texture->texture, (Vector2){renderingPostion.X + width, renderingPostion.Y + height}, rotation, 1, WHITE);
+		DrawTextureEx(texture->texture, (Vector2){renderingPosition.X + width, renderingPosition.Y + height}, rotation, 1, WHITE);
 	}
 	Collide();
 	Push(targetDirection, speed);

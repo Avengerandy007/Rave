@@ -15,7 +15,7 @@ Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam
 }
 
 void Decoration::DetectCollisions() {
-	if (CollidingCircle(*player, 50)){
+	if (CollidingCircle(*player, 100)){
 		GameFr::Util::EventDataPoint dataPoint(position, std::array<int, 10>());
 		const std::shared_ptr<GameFr::Event> ev = std::make_shared<GameFr::Event>(GameFr::Event::Types::COLLISION, GetPtr(), player, dataPoint);
 		if (!ev) return;
@@ -38,7 +38,7 @@ void Decoration::Update(){
 	GetRenderingPosition(*camera);
 	DetectCollisions();
 	if (onScreen && texture){
-		DrawTexture(texture->texture, renderingPostion.X, renderingPostion.Y, WHITE);
+		DrawTexture(texture->texture, renderingPosition.X, renderingPosition.Y, WHITE);
 	}
 }
 

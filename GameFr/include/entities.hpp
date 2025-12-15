@@ -28,8 +28,8 @@ namespace GameFr{
 		 */
 		template<typename T>
 		void AssignDimensionsToRenderingLibRect(T& X, T& Y, T& W, T& H){
-			X = renderingPostion.X;
-			Y = renderingPostion.Y;
+			X = renderingPosition.X;
+			Y = renderingPosition.Y;
 			W = width;
 			H = height;
 		}
@@ -37,7 +37,7 @@ namespace GameFr{
 		 *	Use the following three in an update function
 		 *	Their purpose is to check if this entity is visible on camera
 		 */
-		Vector2 renderingPostion;				//The position that reflects where on screen this entity is located
+		Vector2 renderingPosition;				//The position that reflects where on screen this entity is located
 		bool onScreen;						//Is assigned in GetRenderingPosition(), use to chek if this is on screen in Update()
 		void GetRenderingPosition(const Camera2D& camera);	/* Gets the position that reflects where this should be rendered
 									 * and also checks if it's visible on the given camera

@@ -42,7 +42,7 @@ void Enemy::Respawn(){
 void Enemy::Collide(){
 
 	//detect collisions with player
-	if (CollidingCircle(*player, 50)){
+	if (CollidingCircle(*player, 100)){
 		GameFr::Util::EventDataPoint data(position, {});
 		GameFr::Event ev(GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
@@ -97,7 +97,7 @@ void Enemy::ShootAtPlayer(){
 
 void Enemy::Update(){
 	GetRenderingPosition(*camera);
-	if (onScreen) DrawTexture(texture->texture, renderingPostion.X, renderingPostion.Y, WHITE);
+	if (onScreen) DrawTexture(texture->texture, renderingPosition.X, renderingPosition.Y, WHITE);
 	Move();
 	Collide();
 	Push(direction, speed);

@@ -58,5 +58,4 @@ void GameManager::Update(){
 
 void GameManager::InitEntities(){
 	player->SetCamera(camera);
-	player->SetTexture();
 }

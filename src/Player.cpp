@@ -6,28 +6,36 @@
 #include <event.hpp>
 #include <memory>
 #include "Projectile.hpp"
+#include "util/TextureArrays.hpp"
 #include <raylib.h>
 #include <util/vectors.hpp>
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
-}
-
-void Player::SetTexture(){
-	texture.Assign("resources/Player.png");
+	width = 200;
+	height = 100;
+	texture = Util::TextureArrays::decorations[1];
 }
 
 void Player::Move(){
 	direction.X = 0;
 	direction.Y = 0;
+	rotation = 0;
 	if (IsKeyDown(KEY_A)){
 		direction.X = -1;
+		rotation = 0;
 	}if (IsKeyDown(KEY_S)){
 		direction.Y = 1;
+		rotation = 90;
 	}if (IsKeyDown(KEY_W)){
 		direction.Y = -1;
+		rotation = 90;
 	}if (IsKeyDown(KEY_D)){
 		direction.X = 1;
+		rotation = 0;
+	}
+	if (direction.Magnitude() != 1 && direction.Magnitude() != 0){
+		rotation = (direction.X * direction.Y <= 0) ? -45 : 45;
 	}
 	if (IsKeyDown(KEY_LEFT_SHIFT)) speed = 10;
 	else if (IsKeyDown(KEY_LEFT_CONTROL)) speed = 4;
@@ -96,7 +104,7 @@ void Player::Update(){
 	Push(direction, speed);
 	Shoot();
 	if (onScreen){
-		DrawTexture(texture.texture, renderingPostion.X, renderingPostion.Y, WHITE);
+		DrawTexturePro(texture->texture, (Rectangle){0, 0, (float)width, (float)height}, (Rectangle){renderingPosition.X, renderingPosition.Y, (float)width, (float)height}, Vector2((float)width / 2, (float)height / 2), rotation, WHITE);
 	}
 }
 
