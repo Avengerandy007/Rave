@@ -7,7 +7,7 @@
 #include <raylib.h>
 
 std::array<std::shared_ptr<Util::Texture>, 2> Util::TextureArrays::decorations;
-std::array<std::shared_ptr<Util::Texture>, 1> Util::TextureArrays::enemies;
+std::array<std::shared_ptr<Util::Texture>, 2> Util::TextureArrays::enemies;
 std::shared_ptr<GameFr::EventQueue> Global::eventQueue;
 std::unique_ptr<GameManager> Global::game;
 
@@ -18,7 +18,8 @@ void InitTextureArrays(){
 		std::make_shared<Util::Texture>("resources/Player.png")
 	};
 	TA::enemies = {
-		std::make_shared<Util::Texture>("resources/Ghost.png")
+		std::make_shared<Util::Texture>("resources/Ghost.png"),
+		std::make_shared<Util::Texture>("resources/Projectile.png")
 	};
 }
 

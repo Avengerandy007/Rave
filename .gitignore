@@ -54,4 +54,3 @@ _deps CMakeUserPresets.json
 .cache/*
 build/*
 Debug/*
-log.txt

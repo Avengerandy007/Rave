@@ -12,6 +12,9 @@ namespace Util{
 	Texture::Texture(){
 		std::cout << "Texture default ctor called\n";
 	}
+	void Texture::Assign(const Image& img){
+		texture = LoadTextureFromImage(img);
+	}
 
 	Texture::Texture(const Texture& other){
 		texture = other.texture;

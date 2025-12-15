@@ -11,7 +11,10 @@ namespace GameFr{
 
 		static float GetDistance(const Vector2& first, const Vector2& second);
 		static Vector2 GetDiference(const Vector2& first, const Vector2& second);
+		static float DotProduct(const Vector2& first, const Vector2& second);
+		
 		void Normalize();
+		float Magnitude();
 	};
 
 	struct Vector3{

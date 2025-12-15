@@ -11,6 +11,7 @@ namespace Util{
 		Texture();
 		Texture(const Texture& other);
 		void Assign(std::string path);
+		void Assign(const Image& img);
 		~Texture();
 	};
 }

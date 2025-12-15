@@ -21,6 +21,7 @@ private:
 	const std::shared_ptr<Player> player;
 	const Types type;
 	const Senders sender;
+	float rotation;
 	int speed;
 	std::shared_ptr<GameFr::Camera2D> camera;
 	GameFr::Randomizer random;

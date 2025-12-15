@@ -5,8 +5,10 @@
 #include <chrono>
 #include <event.hpp>
 #include <memory>
+#include <raylib.h>
 #include <util/vectors.hpp>
 #include <assert.h>
+#include <math.h>
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -73,37 +75,45 @@ Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr
 	position = startingPosition;
 	camera = cam;
 	speed = random.GetRandomNumber();
+	width = 39;
+	height = 16;
 	targetDirection.Normalize();
-	texture = Util::TextureArrays::decorations[1];
+	texture = Util::TextureArrays::enemies[1];
+	rotation = std::acos(targetDirection.X / (targetDirection.Magnitude())) * 57 + 180;
+	rotation = (targetDirection.Y < 0) ? -rotation : rotation;
 }
 
 Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send, const int p_Speed) : type(t), targetDirection(target), random(4, 7), creationTime(std::chrono::system_clock::now()), player(Global::game->player), sender(send){
 	eventInterface.AssignQueue(Global::eventQueue);
 	position = startingPosition;
 	camera = cam;
+	width = 39;
+	height = 16;
 	speed = p_Speed;
 	targetDirection.Normalize();
-	texture = Util::TextureArrays::decorations[1];
+	texture = Util::TextureArrays::enemies[1];
+	rotation = std::acos(targetDirection.X / (targetDirection.Magnitude())) * 57 + 180;
+	rotation = (targetDirection.Y < 0) ? -rotation : rotation;
 }
 
 void Projectile::Collide(){
 
 	for (auto& decoration : Global::game->decorations.array){
-		if (CollidingCircle(*decoration, 50)){
+		if (CollidingCircle(*decoration, 30)){
 			GameFr::Util::EventDataPoint data(position, {});
 			GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), decoration, data);
 			eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 		}
 	}
 
-	if (CollidingCircle(*player, 50) && sender != Senders::PLAYER){
+	if (CollidingCircle(*player, 30) && sender != Senders::PLAYER){
 		GameFr::Util::EventDataPoint data(position, {});
 		GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 	}
 	if (sender == Senders::PLAYER){
 		for (auto& enemy : Global::game->enemies.array){
-			if (CollidingCircle(*enemy, 50)){
+			if (CollidingCircle(*enemy, 45)){
 				GameFr::Util::EventDataPoint data(position, {});
 				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
@@ -114,7 +124,9 @@ void Projectile::Collide(){
 
 void Projectile::Update(){
 	GetRenderingPosition(*camera);
-	if (onScreen) DrawTexture(texture->texture, renderingPostion.X, renderingPostion.Y, WHITE);
+	if (onScreen) {
+		DrawTextureEx(texture->texture, (Vector2){renderingPostion.X + width, renderingPostion.Y + height}, rotation, 1, WHITE);
+	}
 	Collide();
 	Push(targetDirection, speed);
 }
