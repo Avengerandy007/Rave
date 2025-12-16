@@ -18,6 +18,7 @@ private:
 	const std::chrono::system_clock::time_point creationTime;
 	std::shared_ptr<Util::Texture> texture;
 	void Collide();
+	void OnCollision();
 	const std::shared_ptr<Player> player;
 	const Types type;
 	const Senders sender;
@@ -30,9 +31,9 @@ private:
 };
 
 enum struct Projectile::Types{
-	IDK1 = 0,
-	IDK2 = 1,
-	IDK3 = 2
+	NORMAL = 0,
+	EXPLOSIVE = 1,
+	IDK = 2
 };
 
 enum struct Projectile::Senders{

@@ -14,6 +14,30 @@ ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
 }
 
+void Projectile::OnCollision(){
+	switch (type){
+		case Types::NORMAL: break;
+
+		case Types::EXPLOSIVE:
+			for (auto& enemy : Global::game->enemies.array){
+				if (CollidingCircle(*enemy, 100)){
+					GameFr::Util::EventDataPoint data(position, {});
+					GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
+					eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+				}
+				
+			}
+			if (CollidingCircle(*player, 100)){
+				GameFr::Util::EventDataPoint data(position, {});
+				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
+				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+			}
+		break;
+		case Types::IDK:
+			break;
+	}
+}
+
 void ProjectileFactory::Update(){
 	{
 		auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
@@ -117,6 +141,8 @@ void Projectile::Collide(){
 				GameFr::Util::EventDataPoint data(position, {});
 				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+				OnCollision();
+				break;
 			}
 		}
 	}
