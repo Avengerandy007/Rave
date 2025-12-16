@@ -50,13 +50,13 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 }
 
 void Player::Shoot(){
-	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - lastShot >= std::chrono::milliseconds(200)){
+	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - gun.lastShot >= gun.firingSpeed){
 		GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
 		GameFr::Vector2 projectileDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y); //Convert from camera's cartesian system to game and then get vector connecting them
-		GameFr::Util::EventDataPoint data(projectileDirection, {(int)Projectile::Types::EXPLOSIVE, (int)Projectile::Senders::PLAYER, 20});
+		GameFr::Util::EventDataPoint data(projectileDirection, {(int)gun.projectileType, (int)Projectile::Senders::PLAYER, gun.projectileSpeed});
 		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
-		lastShot = std::chrono::system_clock::now();
+		gun.lastShot = std::chrono::system_clock::now();
 	}
 }
 

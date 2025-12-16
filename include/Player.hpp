@@ -4,18 +4,31 @@
 #include <camera.hpp>
 #include "Decoration.hpp"
 #include <chrono>
+#include <cstdint>
 #include <util/vectors.hpp>
+#include <Projectile.hpp>
 
 namespace GF = GameFr;
 
 class GameManager;
 
-class Player : public GF::Entity2D{
+struct Gun{
+	std::chrono::milliseconds firingSpeed;
 	std::chrono::system_clock::time_point lastShot;
+	uint32_t recoil;
+	int projectileSpeed;
+	uint32_t inaccuracy;
+	Projectile::Types projectileType;
+};
+
+class Player : public GF::Entity2D{
 	float speed = 8;
 	float rotation;
 	std::shared_ptr<Util::Texture> texture;
 	std::shared_ptr<GF::Camera2D> camera;
+
+	Gun gun;
+
 	void Move();
 	void Collide();
 	void Shoot();
