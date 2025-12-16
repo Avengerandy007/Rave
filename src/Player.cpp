@@ -53,7 +53,9 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 	else if (other->position.Y > position.Y && direction.Y == 1) direction.Y = -1;
 }
 
+//TODO: Figure out a way to implement inaccuracy
 void Player::Shoot(){
+	//check if enough time has passed since the last time we shot
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - gun.lastShot >= gun.firingSpeed){
 		GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
 		GameFr::Vector2 projectileDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y); //Convert from camera's cartesian system to game and then get vector connecting them
@@ -62,6 +64,7 @@ void Player::Shoot(){
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 		gun.lastShot = std::chrono::system_clock::now();
 
+		//Apply recoil
 		position.X += (projectileDirection.X < 0) ? gun.recoil / 2 : -gun.recoil / 2;
 		position.Y += (projectileDirection.Y < 0) ? gun.recoil / 2 : -gun.recoil / 2;
 	}
