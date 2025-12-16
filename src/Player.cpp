@@ -15,6 +15,10 @@ Player::Player(){
 	width = 200;
 	height = 100;
 	texture = Util::TextureArrays::decorations[1];
+	gun.projectileType = (uint8_t)Projectile::Types::NORMAL;
+	gun.firingSpeed = std::chrono::milliseconds(200);
+	gun.recoil = 50;
+	gun.projectileSpeed = 50;
 }
 
 void Player::Move(){
@@ -57,6 +61,9 @@ void Player::Shoot(){
 		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 		gun.lastShot = std::chrono::system_clock::now();
+
+		position.X += (projectileDirection.X < 0) ? gun.recoil / 2 : -gun.recoil / 2;
+		position.Y += (projectileDirection.Y < 0) ? gun.recoil / 2 : -gun.recoil / 2;
 	}
 }
 

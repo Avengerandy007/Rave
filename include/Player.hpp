@@ -6,7 +6,6 @@
 #include <chrono>
 #include <cstdint>
 #include <util/vectors.hpp>
-#include <Projectile.hpp>
 
 namespace GF = GameFr;
 
@@ -15,10 +14,10 @@ class GameManager;
 struct Gun{
 	std::chrono::milliseconds firingSpeed;
 	std::chrono::system_clock::time_point lastShot;
-	uint32_t recoil;
+	uint8_t recoil;
 	int projectileSpeed;
-	uint32_t inaccuracy;
-	Projectile::Types projectileType;
+	uint8_t inaccuracy;
+	uint8_t projectileType;
 };
 
 class Player : public GF::Entity2D{
