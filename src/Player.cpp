@@ -12,19 +12,25 @@
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
+
 	width = 200;
 	height = 100;
+
 	texture = Util::TextureArrays::decorations[1];
+
+	//init gun proprieties
 	gun.projectileType = (uint8_t)Projectile::Types::NORMAL;
 	gun.firingSpeed = std::chrono::milliseconds(200);
-	gun.recoil = 50;
+	gun.recoil = 0;
 	gun.projectileSpeed = 50;
 }
 
 void Player::Move(){
+
 	direction.X = 0;
 	direction.Y = 0;
 	rotation = 0;
+
 	if (IsKeyDown(KEY_A)){
 		direction.X = -1;
 		rotation = 0;
@@ -38,9 +44,12 @@ void Player::Move(){
 		direction.X = 1;
 		rotation = 0;
 	}
-	if (direction.Magnitude() != 1 && direction.Magnitude() != 0){
+
+	//set the rotation to be 45 / -45 based if there are multiple keys pressed at once
+	if (direction.Magnitude() > 1){
 		rotation = (direction.X * direction.Y <= 0) ? -45 : 45;
 	}
+
 	if (IsKeyDown(KEY_LEFT_SHIFT)) speed = 10;
 	else if (IsKeyDown(KEY_LEFT_CONTROL)) speed = 4;
 	else if (speed != 8) speed = 8;
@@ -65,8 +74,10 @@ void Player::Shoot(){
 		gun.lastShot = std::chrono::system_clock::now();
 
 		//Apply recoil
-		position.X += (projectileDirection.X < 0) ? gun.recoil / 2 : -gun.recoil / 2;
-		position.Y += (projectileDirection.Y < 0) ? gun.recoil / 2 : -gun.recoil / 2;
+		if (gun.recoil != 0){
+			position.X += (projectileDirection.X < 0) ? gun.recoil : -gun.recoil;
+			position.Y += (projectileDirection.Y < 0) ? gun.recoil : -gun.recoil;
+		}
 	}
 }
 
@@ -114,7 +125,13 @@ void Player::Update(){
 	Push(direction, speed);
 	Shoot();
 	if (onScreen){
-		DrawTexturePro(texture->texture, (Rectangle){0, 0, (float)width, (float)height}, (Rectangle){renderingPosition.X, renderingPosition.Y, (float)width, (float)height}, Vector2((float)width / 2, (float)height / 2), rotation, WHITE);
+		DrawTexturePro(
+			texture->texture, 
+			(Rectangle){0, 0, (float)width, (float)height}, //part to draw from the texture
+			(Rectangle){renderingPosition.X, renderingPosition.Y, (float)width, (float)height}, //where to draw said texture
+			Vector2((float)width / 2, (float)height / 2), //origin of texture and pivot point
+			rotation,
+			WHITE);
 	}
 }
 
