@@ -1,14 +1,7 @@
 #include "Projectile.hpp"
-#include "util/Globals.hpp"
 #include "util/TextureArrays.hpp"
 #include "GameManager.hpp"
-#include <chrono>
-#include <event.hpp>
-#include <memory>
-#include <raylib.h>
-#include <util/vectors.hpp>
 #include <assert.h>
-#include <math.h>
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);

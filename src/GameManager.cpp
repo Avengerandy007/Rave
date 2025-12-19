@@ -1,11 +1,5 @@
 #include "GameManager.hpp"
 #include "Enemy.hpp"
-#include "Decoration.hpp"
-#include "util/Globals.hpp"
-#include "util/ObjectArray.hpp"
-#include <camera.hpp>
-#include <memory>
-#include <raylib.h>
 
 GameManager::GameManager() : player(std::make_shared<Player>()), camera(std::make_shared<GameFr::Camera2D>(GameFr::Camera2D::Modes::FOLLOW, player, GetScreenWidth(), GetScreenHeight())){
 	eventInterface.AssignQueue(Global::eventQueue);
