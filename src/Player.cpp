@@ -19,7 +19,8 @@ Player::Player(){
 	texture = Util::TextureArrays::decorations[1];
 
 	//init gun proprieties
-	gun.projectileType = (uint8_t)Projectile::Types::NORMAL;
+	//gun.projectileType = (uint8_t)Projectile::Types::NORMAL;
+	gun.projectileType = (uint8_t)Projectile::Types::EXPLOSIVE;
 	gun.firingSpeed = std::chrono::milliseconds(200);
 	gun.recoil = 0;
 	gun.projectileSpeed = 50;

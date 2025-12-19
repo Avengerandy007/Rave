@@ -53,6 +53,15 @@ void GameManager::Update(){
 	camera->Update();
 	ListenForEvents();
 
+	for (uint32_t i = 0; i < vfx.size(); i++){
+		if (vfx[i]->ShouldDestroy()){
+			vfx.erase(vfx.begin() + i);
+			i--;
+			continue;
+		}
+		vfx[i]->Update();
+	}
+
 	EndDrawing();
 }
 
