@@ -68,3 +68,7 @@ void GameManager::Update(){
 void GameManager::InitEntities(){
 	player->SetCamera(camera);
 }
+
+GameManager::~GameManager(){
+	vfx.clear();
+}

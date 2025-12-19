@@ -21,5 +21,6 @@ public:
 	ProjectileFactory projectileFactory;
 	void Update();
 	GameManager();
+	~GameManager();
 	void InitEntities();
 };
