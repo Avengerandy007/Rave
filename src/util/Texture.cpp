@@ -4,13 +4,13 @@
 
 namespace Util{
 	Texture::Texture(std::string path){
-		std::cout << "New image at " << path << "\n";
+		std::clog << "New image at " << path << "\n";
 		image = LoadImage(path.c_str());
 		texture = LoadTextureFromImage(image);
 		UnloadImage(image);
 	}
 	Texture::Texture(){
-		std::cout << "Texture default ctor called\n";
+		std::clog << "Texture default ctor called\n";
 	}
 	void Texture::Assign(const Image& img){
 		texture = LoadTextureFromImage(img);
@@ -21,13 +21,16 @@ namespace Util{
 	}
 
 	void Texture::Assign(std::string path){
-		std::cout << "New image at " << path << "\n";
+		std::clog << "New image at " << path << "\n";
 		image = LoadImage(path.c_str());
 		texture = LoadTextureFromImage(image);
 		UnloadImage(image);
 	}
-	
-	Texture::~Texture(){
-		UnloadTexture(texture);
+
+	void Texture::Unload(){
+		if (texture.id != 0){
+			UnloadTexture(texture);
+			texture.id = 0;
+		}
 	}
 }
