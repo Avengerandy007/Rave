@@ -16,7 +16,7 @@ void InitTextureArrays(){
 		std::make_shared<Util::Texture>("resources/Explosion.png")
 	};
 	TA::enemies = {
-		std::make_shared<Util::Texture>("resources/Ghost.png"),
+		std::make_shared<Util::Texture>("resources/Enemy.png"),
 		std::make_shared<Util::Texture>("resources/Projectile.png")
 	};
 }

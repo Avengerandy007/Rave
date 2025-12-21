@@ -33,6 +33,7 @@ class Player : public GF::Entity2D{
 	void Shoot();
 	void StopMovementBasedOnDirection(const std::shared_ptr<const Decoration> other); //don't allow player to move if colliding with object in movement direction
 	void Died(); //Create a PLAYER_DEATH event to handle in GameManager
+	void RotateTexture();
 
 public:
 	GF::Vector2 direction;

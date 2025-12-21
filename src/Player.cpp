@@ -13,8 +13,8 @@
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
 
-	width = 200;
-	height = 100;
+	width = 75;
+	height = 75;
 
 	texture = Util::TextureArrays::decorations[1];
 
@@ -30,25 +30,15 @@ void Player::Move(){
 
 	direction.X = 0;
 	direction.Y = 0;
-	rotation = 0;
 
 	if (IsKeyDown(KEY_A)){
 		direction.X = -1;
-		rotation = 0;
 	}if (IsKeyDown(KEY_S)){
 		direction.Y = 1;
-		rotation = 90;
 	}if (IsKeyDown(KEY_W)){
 		direction.Y = -1;
-		rotation = 90;
 	}if (IsKeyDown(KEY_D)){
 		direction.X = 1;
-		rotation = 0;
-	}
-
-	//set the rotation to be 45 / -45 based if there are multiple keys pressed at once
-	if (direction.Magnitude() > 1){
-		rotation = (direction.X * direction.Y <= 0) ? -45 : 45;
 	}
 
 	if (IsKeyDown(KEY_LEFT_SHIFT)) speed = 10;
@@ -119,12 +109,20 @@ void Player::Collide(){
 	}
 }
 
+void Player::RotateTexture(){
+	GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
+	GameFr::Vector2 mouseDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y); //Convert from camera's cartesian system to game and then get vector connecting them
+	rotation = std::acos(mouseDirection.X / (mouseDirection.Magnitude())) * 57 + 180;
+	rotation = (mouseDirection.Y < 0) ? -rotation : rotation;
+}
+
 void Player::Update(){
 	Move();
 	GetRenderingPosition(*camera);
 	Collide();
 	Push(direction, speed);
 	Shoot();
+	RotateTexture();
 	if (onScreen){
 		DrawTexturePro(
 			texture->texture, 

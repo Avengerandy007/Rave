@@ -22,7 +22,7 @@ void Projectile::OnCollision(){
 					
 				}
 			}
-			if (CollidingCircle(*player, 100)){
+			else if (sender != Senders::PLAYER && CollidingCircle(*player, 100)){
 				GameFr::Util::EventDataPoint data(position, {});
 				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
@@ -124,13 +124,15 @@ void Projectile::Collide(){
 			GameFr::Util::EventDataPoint data(position, {});
 			GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), decoration, data);
 			eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+			OnCollision();
 		}
 	}
 
-	if (CollidingCircle(*player, 100) && sender != Senders::PLAYER){
+	if (CollidingCircle(*player, 50) && sender != Senders::PLAYER){
 		GameFr::Util::EventDataPoint data(position, {});
 		GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 		eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+		OnCollision();
 	}
 	if (sender == Senders::PLAYER){
 		for (auto& enemy : Global::game->enemies.array){
@@ -143,6 +145,7 @@ void Projectile::Collide(){
 			}
 		}
 	}
+
 }
 
 void Projectile::Update(){

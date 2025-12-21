@@ -7,15 +7,21 @@
 
 Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-GetScreenWidth(), GetScreenWidth()){
 	eventInterface.AssignQueue(Global::eventQueue);
+
 	position.X = random.GetRandomNumber();
 	position.Y = random.GetRandomNumber();
+
+	width = 50;
+	height = 50;
+
 	random.ChangeRange(0, 1);
 	texture = Util::TextureArrays::decorations[random.GetRandomNumber()];
+
 	player = std::reinterpret_pointer_cast<Player>(camera->entity);
 }
 
 void Decoration::DetectCollisions() {
-	if (CollidingCircle(*player, 100)){
+	if (CollidingCircle(*player, 50)){
 		GameFr::Util::EventDataPoint dataPoint(position, std::array<int, 10>());
 		const std::shared_ptr<GameFr::Event> ev = std::make_shared<GameFr::Event>(GameFr::Event::Types::COLLISION, GetPtr(), player, dataPoint);
 		if (!ev) return;
