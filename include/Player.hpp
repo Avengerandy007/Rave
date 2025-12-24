@@ -10,15 +10,28 @@
 namespace GF = GameFr;
 
 class GameManager;
+namespace Weapons{
+	struct Upgrade{
+		std::chrono::milliseconds firingSpeed;
+		std::chrono::system_clock::time_point lastShot;
+		uint8_t recoil;
+		int projectileSpeed;
+		uint8_t inaccuracy;
+		uint8_t projectileType;
+	private:	
+		GameFr::Randomizer random;
+	};
 
-struct Gun{
-	std::chrono::milliseconds firingSpeed;
-	std::chrono::system_clock::time_point lastShot;
-	uint8_t recoil;
-	int projectileSpeed;
-	uint8_t inaccuracy;
-	uint8_t projectileType;
-};
+	struct Gun{
+		std::chrono::milliseconds firingSpeed;
+		std::chrono::system_clock::time_point lastShot;
+		uint8_t recoil;
+		int projectileSpeed;
+		uint8_t inaccuracy;
+		uint8_t projectileType;
+		void ApplyUpgrade(Upgrade& up);
+	};
+}
 
 class Player : public GF::Entity2D{
 	float speed = 8;
@@ -26,7 +39,7 @@ class Player : public GF::Entity2D{
 	std::shared_ptr<Util::Texture> texture;
 	std::shared_ptr<GF::Camera2D> camera;
 
-	Gun gun;
+	Weapons::Gun gun;
 
 	void Move();
 	void Collide();
