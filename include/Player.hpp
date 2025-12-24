@@ -13,11 +13,11 @@ class GameManager;
 namespace Weapons{
 	struct Upgrade{
 		std::chrono::milliseconds firingSpeed;
-		std::chrono::system_clock::time_point lastShot;
 		uint8_t recoil;
 		int projectileSpeed;
 		uint8_t inaccuracy;
 		uint8_t projectileType;
+		Upgrade();
 	private:	
 		GameFr::Randomizer random;
 	};
@@ -29,7 +29,7 @@ namespace Weapons{
 		int projectileSpeed;
 		uint8_t inaccuracy;
 		uint8_t projectileType;
-		void ApplyUpgrade(Upgrade& up);
+		void ApplyUpgrade(const Upgrade& up);
 	};
 }
 

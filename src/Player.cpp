@@ -3,6 +3,7 @@
 #include "Enemy.hpp"
 #include "util/Globals.hpp"
 #include <chrono>
+#include <cstdint>
 #include <event.hpp>
 #include <memory>
 #include "Projectile.hpp"
@@ -132,8 +133,28 @@ void Player::Update(){
 			rotation,
 			WHITE);
 	}
+
+	if (IsKeyPressed(KEY_SPACE)){
+		Weapons::Upgrade up;
+		gun.ApplyUpgrade(up);
+	}
 }
 
 void Player::SetCamera(const std::shared_ptr<GameFr::Camera2D> cam){
 	camera = cam;
+}
+
+
+Weapons::Upgrade::Upgrade() : random(-1, 5){
+	firingSpeed = std::chrono::milliseconds(random.GetRandomNumber());
+	recoil = random.GetRandomNumber();
+	projectileSpeed = random.GetRandomNumber();
+	inaccuracy = random.GetRandomNumber();
+}
+
+void Weapons::Gun::ApplyUpgrade(const Upgrade& up){
+	firingSpeed += up.firingSpeed;
+	recoil += up.recoil;
+	projectileSpeed += up.projectileSpeed;
+	inaccuracy += up.inaccuracy;
 }
