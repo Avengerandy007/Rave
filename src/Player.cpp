@@ -151,7 +151,6 @@ Weapons::Upgrade::Upgrade() : random(-1, 5){
 
 void Weapons::Gun::ApplyUpgrade(const Upgrade& up){
 	firingSpeed += up.firingSpeed;
-	recoil += up.recoil;
 	projectileSpeed += up.projectileSpeed;
 	inaccuracy += up.inaccuracy;
 }
