@@ -39,7 +39,6 @@ class Player : public GF::Entity2D{
 	std::shared_ptr<Util::Texture> texture;
 	std::shared_ptr<GF::Camera2D> camera;
 
-	Weapons::Gun gun;
 
 	void Move();
 	void Collide();
@@ -51,6 +50,8 @@ class Player : public GF::Entity2D{
 public:
 	GF::Vector2 direction;
 	void Update() override;
+	Weapons::Gun gun;
+	uint32_t killCount;
 	Player();
 	void SetCamera(const std::shared_ptr<GameFr::Camera2D> cam);
 };

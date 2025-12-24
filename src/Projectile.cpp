@@ -1,4 +1,5 @@
 #include "Projectile.hpp"
+#include "Player.hpp"
 #include "util/TextureArrays.hpp"
 #include "GameManager.hpp"
 #include <assert.h>
@@ -140,6 +141,11 @@ void Projectile::Collide(){
 				GameFr::Util::EventDataPoint data(position, {});
 				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+				player->killCount++;
+				if (player->killCount % 5 == 0){
+					Weapons::Upgrade up;
+					player->gun.ApplyUpgrade(up);
+				}
 				OnCollision();
 				break;
 			}

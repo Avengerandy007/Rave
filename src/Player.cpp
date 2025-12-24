@@ -77,6 +77,7 @@ void Player::Died(){
 	GameFr::Util::EventDataPoint data (position, {});
 	GameFr::Event ev(GameFr::Event::Types::PLAYER_DEATH, GetPtr(), nullptr, data);
 	eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
+	killCount = 0;
 }
 
 void Player::Collide(){
@@ -133,11 +134,7 @@ void Player::Update(){
 			rotation,
 			WHITE);
 	}
-
-	if (IsKeyPressed(KEY_SPACE)){
-		Weapons::Upgrade up;
-		gun.ApplyUpgrade(up);
-	}
+	
 }
 
 void Player::SetCamera(const std::shared_ptr<GameFr::Camera2D> cam){
