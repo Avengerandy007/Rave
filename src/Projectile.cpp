@@ -1,5 +1,6 @@
 #include "Projectile.hpp"
 #include "Player.hpp"
+#include "Vfx.hpp"
 #include "util/TextureArrays.hpp"
 #include "GameManager.hpp"
 #include <assert.h>
@@ -29,7 +30,7 @@ void Projectile::OnCollision(){
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 			}
 			//create the explosion effect
-			Global::game->vfx.push_back(std::make_shared<Vfx>(Util::TextureArrays::decorations[2], std::chrono::milliseconds(2000), position));
+			Global::game->vfx.push_back(std::make_shared<AnimatedVfx>(Util::TextureArrays::decorations[2], std::chrono::milliseconds(225), position, 0));
 
 		break;
 		case Types::IDK: break;

@@ -19,11 +19,11 @@ namespace Util{
 
 	class AnimatedTexture : public Texture{
 		uint32_t frame;
-		uint32_t frameDelay;
 		uint32_t frameCounter;
 		int totalFrames;
 		int frameOffset;
 	public:
+		uint32_t frameDelay;
 		AnimatedTexture(const std::string path);
 		AnimatedTexture();
 		AnimatedTexture(const AnimatedTexture& other);

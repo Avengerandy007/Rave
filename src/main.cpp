@@ -13,7 +13,7 @@ void InitTextureArrays(){
 	TA::decorations = {
 		std::make_shared<Util::Texture>("resources/Wall.png"),
 		std::make_shared<Util::Texture>("resources/Player.png"),
-		std::make_shared<Util::Texture>("resources/Explosion.png")
+		std::make_shared<Util::AnimatedTexture>("resources/Explosion.gif")
 	};
 	TA::enemies = {
 		std::make_shared<Util::Texture>("resources/Enemy.png"),
