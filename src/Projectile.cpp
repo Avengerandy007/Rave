@@ -138,7 +138,7 @@ void Projectile::Collide(){
 	}
 	if (sender == Senders::PLAYER){
 		for (auto& enemy : Global::game->enemies.array){
-			if (CollidingCircle(*enemy, 45)){
+			if (CollidingCircle(*enemy, 60)){
 				GameFr::Util::EventDataPoint data(position, {});
 				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), enemy, data);
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
@@ -158,7 +158,13 @@ void Projectile::Collide(){
 void Projectile::Update(){
 	GetRenderingPosition(*camera);
 	if (onScreen) {
-		DrawTextureEx(texture->texture, (Vector2){renderingPosition.X + width, renderingPosition.Y + height}, rotation, 1, WHITE);
+		DrawTexturePro(
+			texture->texture, 
+			(Rectangle){0, 0, (float)width, (float)height}, //part to draw from the texture
+			(Rectangle){renderingPosition.X, renderingPosition.Y, (float)width, (float)height}, //where to draw said texture
+			Vector2((float)width / 2, (float)height / 2), //origin of texture and pivot point
+			rotation,
+			WHITE);
 	}
 	Collide();
 	Push(targetDirection, speed);
