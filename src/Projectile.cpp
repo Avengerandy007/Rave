@@ -30,7 +30,7 @@ void Projectile::OnCollision(){
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
 			}
 			//create the explosion effect
-			Global::game->vfx.push_back(std::make_shared<AnimatedVfx>(Util::TextureArrays::decorations[2], std::chrono::milliseconds(225), position, 0));
+			Global::game->vfx.push_back(std::make_shared<AnimatedVfx>(Util::TextureArrays::decorations[2], std::chrono::milliseconds(225), position, 5));
 
 		break;
 		case Types::IDK: break;

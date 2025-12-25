@@ -142,7 +142,7 @@ void Player::SetCamera(const std::shared_ptr<GameFr::Camera2D> cam){
 }
 
 
-Weapons::Upgrade::Upgrade() : random(-1, 5){
+Weapons::Upgrade::Upgrade() : random(-5, 5){
 	firingSpeed = std::chrono::milliseconds(random.GetRandomNumber());
 	recoil = random.GetRandomNumber();
 	projectileSpeed = random.GetRandomNumber();
