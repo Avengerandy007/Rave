@@ -57,6 +57,7 @@ void ProjectileFactory::Update(){
 		if (projectileList.size() >= 700) {
 			projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 699));
 		}
+		//Destroy old projectiles and update the rest
 		for (size_t i = 0; i < projectileList.size(); i++){
 			auto& projectile = projectileList[i];
 			if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(10)){
@@ -68,6 +69,7 @@ void ProjectileFactory::Update(){
 			projectileList[i]->Update();
 		}
 	}
+	//Destroy projectiles that have collided with something
 	{
 		auto ev = eventInterface.Listen(GameFr::Event::Types::COLLISION);
 		if (ev){
