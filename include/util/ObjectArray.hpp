@@ -8,7 +8,7 @@ namespace Util{
 		std::array<std::shared_ptr<GameFr::Entity2D>, n> array;
 		void UpdateAll(){
 			for (std::shared_ptr<GameFr::Entity2D> entity : array){
-				entity->Update();
+				if (entity) entity->Update();
 			}
 		}
 	};
