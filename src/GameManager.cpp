@@ -30,7 +30,8 @@ void GameManager::ListenForEvents(){
 				auto deco = std::dynamic_pointer_cast<Decoration>(entity);
 				deco->Update();
 			}
-			projectileFactory.projectileList.clear();
+			//projectileFactory.projectileList.clear();
+			projectileFactory.projectileList.fill(nullptr);
 		}
 	}
 
