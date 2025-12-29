@@ -3,7 +3,6 @@
 #include "Vfx.hpp"
 #include "util/TextureArrays.hpp"
 #include "GameManager.hpp"
-#include <assert.h>
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
