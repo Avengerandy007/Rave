@@ -7,8 +7,6 @@
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
-	headPtr = 0;
-	ptr = 0;
 }
 
 void Projectile::OnCollision(){
@@ -45,33 +43,26 @@ void ProjectileFactory::Update(){
 		while (ev){
 			if (headPtr >= 750) headPtr = 0;
 			if (ev->dataPoint.additionalData[2] == 0){
-				//projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]));
 				projectileList[headPtr] = std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]);
 				headPtr++;
 			}
 			else{
-				//projectileList.emplace_back(std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]));
 				projectileList[headPtr] = std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]);
 				headPtr++;
 			}
 			ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 			
 		}
-		/*if (projectileList.size() >= 700) {
-			projectileList.erase(projectileList.begin(), projectileList.begin() + (projectileList.size() - 699));
-		}*/
-		//Destroy old projectiles and update the rest
-		if (ptr > headPtr) ptr = 0;
-		for (; ptr <= headPtr; ptr++){
-			auto& projectile = projectileList[ptr];
-			if (!projectile) continue;
-			if (std::chrono::system_clock::now() - projectile->creationTime >= std::chrono::seconds(10)){
-				//assert(i < projectileList.size());
-				projectile = nullptr;
-				continue;
-			}
-			projectile->Update();
+		
+	}
+	//Destroy old projectiles and update the rest
+	for (uint16_t ptr = 0; ptr < headPtr; ptr++){
+		if (!projectileList[ptr]) continue;
+		if (std::chrono::system_clock::now() - projectileList[ptr]->creationTime >= std::chrono::seconds(10)){
+			projectileList[ptr] = nullptr;
+			continue;
 		}
+		projectileList[ptr]->Update();
 	}
 	//Destroy projectiles that have collided with something
 	{
@@ -79,7 +70,8 @@ void ProjectileFactory::Update(){
 		if (ev){
 			auto sender = std::dynamic_pointer_cast<const Projectile>(ev->sender);
 			if (sender){
-				sender = nullptr;
+				auto i = std::find(projectileList.begin(), projectileList.end(), ev->sender);
+				*i = nullptr;
 			}
 		}
 	}

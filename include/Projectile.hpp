@@ -1,12 +1,10 @@
 #pragma once
-#include "util/ObjectArray.hpp"
 #include "util/Texture.hpp"
 #include <camera.hpp>
 #include <chrono>
 #include <cstdint>
 #include <entities.hpp>
 #include <util/Randomizer.hpp>
-#include <vector>
 #include "Player.hpp"
 
 class Projectile : public GameFr::Entity2D{ public:
@@ -45,8 +43,7 @@ enum struct Projectile::Senders{
 
 class ProjectileFactory{
 	GameFr::EventInterface eventInterface;
-	uint16_t ptr; //used to indicate where it is we are in the queue
-	uint16_t headPtr; //used to indicate the newest addition to the queue
+	uint16_t headPtr; 	//used to indicate the newest addition to the queue
 public:
 	//std::vector<std::shared_ptr<Projectile>> projectileList;
 	std::array<std::shared_ptr<Projectile>, 750> projectileList;
