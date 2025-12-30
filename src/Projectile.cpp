@@ -23,7 +23,7 @@ void Projectile::OnCollision(){
 					
 				}
 			}
-			else if (sender != Senders::PLAYER && CollidingCircle(*player, 100)){
+			else if (CollidingCircle(*player, 100)){
 				GameFr::Util::EventDataPoint data(position, {});
 				GameFr::Event ev (GameFr::Event::Types::COLLISION, GetPtr(), player, data);
 				eventInterface.queue->CreateEvent(std::make_shared<const GameFr::Event>(ev));
