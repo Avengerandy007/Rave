@@ -40,7 +40,7 @@ void ProjectileFactory::Update(){
 	{
 		auto ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
 		while (ev){
-			if (headPtr >= 750) headPtr = 0;
+			if (headPtr >= projectileList.size()) headPtr = 0;
 			if (ev->dataPoint.additionalData[2] == 0){
 				projectileList[headPtr] = std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]);
 				headPtr++;

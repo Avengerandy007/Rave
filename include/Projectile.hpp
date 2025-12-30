@@ -45,8 +45,7 @@ class ProjectileFactory{
 	GameFr::EventInterface eventInterface;
 	uint16_t headPtr; 	//used to indicate the newest addition to the queue
 public:
-	//std::vector<std::shared_ptr<Projectile>> projectileList;
-	std::array<std::shared_ptr<Projectile>, 750> projectileList;
+	std::array<std::shared_ptr<Projectile>, 1000> projectileList;
 	ProjectileFactory();
 	void Update();
 };

@@ -13,6 +13,8 @@
 Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(5, 12){
 	eventInterface.AssignQueue(Global::eventQueue);
 	camera = cam;
+	width = 50;
+	height = 50;
 	Respawn();
 	texture = Util::TextureArrays::enemies[0];
 }
