@@ -1,14 +1,8 @@
 #include "Enemy.hpp"
-#include <camera.hpp>
-#include <chrono>
-#include <event.hpp>
-#include <memory>
 #include "Projectile.hpp"
 #include "util/Globals.hpp"
 #include "util/TextureArrays.hpp"
-#include <raylib.h>
 #include <util/GFmath.hpp>
-#include <util/vectors.hpp>
 
 Enemy::Enemy(std::shared_ptr<Player> pl, std::shared_ptr<GameFr::Camera2D> cam) : player(pl), random(5, 12){
 	eventInterface.AssignQueue(Global::eventQueue);

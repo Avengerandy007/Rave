@@ -1,9 +1,6 @@
 #include "Decoration.hpp"
 #include "GameManager.hpp"
 #include "util/TextureArrays.hpp"
-#include "Player.hpp"
-#include <event.hpp>
-#include <util/vectors.hpp>
 
 Decoration::Decoration(const std::shared_ptr<GameFr::Camera2D> cam) : camera(cam), random(-GetScreenWidth(), GetScreenWidth()){
 	eventInterface.AssignQueue(Global::eventQueue);

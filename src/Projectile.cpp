@@ -1,6 +1,4 @@
 #include "Projectile.hpp"
-#include "Player.hpp"
-#include "Vfx.hpp"
 #include "util/TextureArrays.hpp"
 #include "GameManager.hpp"
 

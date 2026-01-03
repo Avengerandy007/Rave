@@ -1,15 +1,8 @@
 #include "Player.hpp"
-#include "Decoration.hpp"
 #include "Enemy.hpp"
 #include "util/Globals.hpp"
-#include <chrono>
-#include <cstdint>
-#include <event.hpp>
-#include <memory>
 #include "Projectile.hpp"
 #include "util/TextureArrays.hpp"
-#include <raylib.h>
-#include <util/vectors.hpp>
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
