@@ -15,7 +15,7 @@ namespace Weapons{
 		std::chrono::milliseconds firingSpeed;
 		uint8_t recoil;
 		int projectileSpeed;
-		uint8_t inaccuracy;
+		int8_t inaccuracy;
 		uint8_t projectileType;
 		Upgrade();
 	private:	
@@ -27,7 +27,7 @@ namespace Weapons{
 		std::chrono::system_clock::time_point lastShot;
 		uint8_t recoil;
 		int projectileSpeed;
-		uint8_t inaccuracy;
+		float inaccuracy;
 		uint8_t projectileType;
 		void ApplyUpgrade(const Upgrade& up);
 	};

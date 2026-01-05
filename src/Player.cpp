@@ -51,7 +51,7 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 void Player::Shoot(){
 	//check if enough time has passed since the last time we shot
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - gun.lastShot >= gun.firingSpeed){
-		GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
+		GameFr::Vector2 mousePosition(GetMouseX() + gun.inaccuracy, GetMouseY() + gun.inaccuracy);
 		GameFr::Vector2 projectileDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y); //Convert from camera's cartesian system to game and then get vector connecting them
 		GameFr::Util::EventDataPoint data(projectileDirection, {(int)gun.projectileType, (int)Projectile::Senders::PLAYER, gun.projectileSpeed});
 		GameFr::Event ev(GameFr::Event::Types::SHOOT, GetPtr(), nullptr, data);
@@ -135,15 +135,24 @@ void Player::SetCamera(const std::shared_ptr<GameFr::Camera2D> cam){
 }
 
 
-Weapons::Upgrade::Upgrade() : random(-5, 5){
-	firingSpeed = std::chrono::milliseconds(random.GetRandomNumber());
-	recoil = random.GetRandomNumber();
+Weapons::Upgrade::Upgrade() : random(10, 60){
 	projectileSpeed = random.GetRandomNumber();
+	random.ChangeRange(40, 150);
+	firingSpeed = std::chrono::milliseconds(random.GetRandomNumber());
+	random.ChangeRange(0, 1);
+	if (random.GetRandomNumber() == 1){
+		random.ChangeRange(10, 100);
+	}else{
+		random.ChangeRange(-100, -10);
+	}
 	inaccuracy = random.GetRandomNumber();
+	random.ChangeRange(10, 20);
+	recoil = random.GetRandomNumber();
 }
 
 void Weapons::Gun::ApplyUpgrade(const Upgrade& up){
-	firingSpeed += up.firingSpeed;
-	projectileSpeed += up.projectileSpeed;
-	inaccuracy += up.inaccuracy;
+	firingSpeed = up.firingSpeed;
+	projectileSpeed = up.projectileSpeed;
+	inaccuracy = up.inaccuracy;
+	recoil = up.recoil;
 }
