@@ -53,7 +53,7 @@ void ProjectileFactory::Update(){
 		
 	}
 	//Destroy old projectiles and update the rest
-	for (uint16_t ptr = 0; ptr < headPtr; ptr++){
+	for (uint16_t ptr = 0; ptr < projectileList.size(); ptr++){
 		if (!projectileList[ptr]) continue;
 		if (std::chrono::system_clock::now() - projectileList[ptr]->creationTime >= std::chrono::seconds(10)){
 			projectileList[ptr] = nullptr;
