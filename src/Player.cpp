@@ -139,7 +139,7 @@ Weapons::Upgrade::Upgrade() : random(10, 60){
 	projectileSpeed = random.GetRandomNumber();
 	random.ChangeRange(40, 150);
 	firingSpeed = std::chrono::milliseconds(random.GetRandomNumber());
-	random.ChangeRange(-100, 100);
+	random.ChangeRange(-50, 50);
 	inaccuracy = random.GetRandomNumber();
 	random.ChangeRange(10, 20);
 	recoil = random.GetRandomNumber();
