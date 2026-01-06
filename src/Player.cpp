@@ -4,7 +4,7 @@
 #include "Projectile.hpp"
 #include "util/Texture.hpp"
 #include "util/TextureArrays.hpp"
-#include <memory>
+#include <thread>
 #define TO_DEGREES * 57 + 180
 
 Player::Player(){
@@ -23,7 +23,7 @@ Player::Player(){
 	gun.projectileSpeed = 50;
 }
 
-void Player::Move(){
+void Player::GetDirection(){
 
 	direction.X = 0;
 	direction.Y = 0;
@@ -78,15 +78,19 @@ void Player::Died(){
 	killCount = 0;
 }
 
-void Player::Collide(){
-	std::shared_ptr<const GameFr::Event> ev = eventInterface.Listen(GetPtr());
-	while(ev){
+void Player::CollideAndMove(){
+	GetDirection();
+	std::shared_ptr<const GameFr::Event> ev;
+	do{
+		ev = eventInterface.Listen(GetPtr());
+		if (!ev) break;
 		if (ev->type == GameFr::Event::Types::COLLISION){
 			//check collisions with decorations
 			{
 				auto sender = std::dynamic_pointer_cast<const Decoration>(ev->sender);
 				if (sender){
 					StopMovementBasedOnDirection(sender);
+					continue;
 				}
 			}
 			
@@ -95,6 +99,7 @@ void Player::Collide(){
 				auto sender = std::dynamic_pointer_cast<const Enemy>(ev->sender);
 				if (sender){
 					Died();
+					continue;
 				}
 			}
 			//check collisions with projectiles
@@ -102,11 +107,12 @@ void Player::Collide(){
 				auto sender = std::dynamic_pointer_cast<const Projectile>(ev->sender);
 				if (sender){
 					Died();
+					continue;
 				}
 			}
 		}
-		ev = eventInterface.Listen(GetPtr());
-	}
+	}while(ev);
+	Push(direction, speed);
 }
 
 void Player::RotateTexture(){
@@ -117,10 +123,8 @@ void Player::RotateTexture(){
 }
 
 void Player::Update(){
-	Move();
+	std::thread collideAndMove(&Player::CollideAndMove, this);
 	GetRenderingPosition(*camera);
-	Collide();
-	Push(direction, speed);
 	Shoot();
 	RotateTexture();
 	//handle switch between animated texture and static one
@@ -130,7 +134,7 @@ void Player::Update(){
 		if (reinterpretedTexture->Finished()){
 			texture = Util::TextureArrays::decorations[1];
 			playShootingAnimation = false;
-		} 
+		}
 	}
 	if (onScreen){
 		DrawTexturePro(
@@ -142,6 +146,7 @@ void Player::Update(){
 			WHITE);
 	}
 	
+	collideAndMove.join();
 }
 
 void Player::SetCamera(const std::shared_ptr<GameFr::Camera2D> cam){
