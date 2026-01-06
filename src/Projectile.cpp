@@ -1,6 +1,11 @@
 #include "Projectile.hpp"
+#include "util/Globals.hpp"
 #include "util/TextureArrays.hpp"
 #include "GameManager.hpp"
+#include <chrono>
+#include <memory>
+#include <util/GFmath.hpp>
+#include <util/vectors.hpp>
 
 ProjectileFactory::ProjectileFactory(){
 	eventInterface.AssignQueue(Global::eventQueue);
@@ -32,6 +37,25 @@ void Projectile::OnCollision(){
 		break;
 		case Types::IDK: break;
 	}
+	active = false;
+}
+
+void ProjectileFactory::OverrideProjectile(std::shared_ptr<Projectile>& projectile, const Projectile::Types type, const GameFr::Vector2 targetPos, const GameFr::Vector2 startPos, const Projectile::Senders senderType, const int p_speed){
+	if (!projectile) projectile = std::make_shared<Projectile>();
+	projectile->creationTime = std::chrono::system_clock::now();
+	projectile->type = type;
+	projectile->sender = senderType;
+	if (senderType == Projectile::Senders::ENEMY){
+		projectile->speed = projectile->random.GetRandomNumber();
+	}else{
+		projectile->speed = p_speed;
+	}
+	projectile->targetDirection = targetPos;
+	projectile->targetDirection.Normalize();
+	projectile->rotation = GameFr::Util::Math::AngleBetweenVectors(targetPos, GameFr::Vector2(1, 0)) + 180;
+	projectile->rotation = (projectile->targetDirection.Y < 0) ? -projectile->rotation : projectile->rotation;
+	projectile->position = startPos;
+	projectile->active = true;
 }
 
 void ProjectileFactory::Update(){
@@ -40,11 +64,11 @@ void ProjectileFactory::Update(){
 		while (ev){
 			if (headPtr >= projectileList.size()) headPtr = 0;
 			if (ev->dataPoint.additionalData[2] == 0){
-				projectileList[headPtr] = std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1]);
+				OverrideProjectile(projectileList[headPtr], (Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, (Projectile::Senders)ev->dataPoint.additionalData[1], 30);
 				headPtr++;
 			}
 			else{
-				projectileList[headPtr] = std::make_shared<Projectile>((Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, Global::game->camera, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]);
+				OverrideProjectile(projectileList[headPtr], (Projectile::Types)ev->dataPoint.additionalData[0], ev->dataPoint.position, ev->sender->position, (Projectile::Senders)ev->dataPoint.additionalData[1], ev->dataPoint.additionalData[2]);
 				headPtr++;
 			}
 			ev = eventInterface.Listen(GameFr::Event::Types::SHOOT);
@@ -56,7 +80,7 @@ void ProjectileFactory::Update(){
 	for (uint16_t ptr = 0; ptr < projectileList.size(); ptr++){
 		if (!projectileList[ptr]) continue;
 		if (std::chrono::system_clock::now() - projectileList[ptr]->creationTime >= std::chrono::seconds(10)){
-			projectileList[ptr] = nullptr;
+			projectileList[ptr]->active = false;
 			continue;
 		}
 		projectileList[ptr]->Update();
@@ -67,16 +91,15 @@ void ProjectileFactory::Update(){
 		if (ev){
 			auto sender = std::dynamic_pointer_cast<const Projectile>(ev->sender);
 			if (sender){
-				auto i = std::find(projectileList.begin(), projectileList.end(), ev->sender);
-				*i = nullptr;
+				std::shared_ptr<Projectile>* i = std::find(projectileList.begin(), projectileList.end(), ev->sender);
+				i->get()->active = false;
 			}
 		}
 	}
 }
 
-Projectile::Projectile(const Projectile& other) : type(other.type), random(other.random), creationTime(other.creationTime), player(Global::game->player), sender(other.sender){
+Projectile::Projectile(const Projectile& other) : type(other.type), random(other.random), creationTime(other.creationTime), player(Global::game->player), sender(other.sender), camera(Global::game->camera){
 	eventInterface = other.eventInterface;
-	camera = other.camera;
 	speed = other.speed;
 	position = other.position;
 	targetDirection = other.targetDirection;
@@ -84,34 +107,16 @@ Projectile::Projectile(const Projectile& other) : type(other.type), random(other
 	texture = other.texture;
 }
 
-Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send) : type(t), targetDirection(target), random(8, 16), creationTime(std::chrono::system_clock::now()), player(Global::game->player), sender(send){
+Projectile::Projectile() : random(8, 16), player(Global::game->player), camera(Global::game->camera){
 	eventInterface.AssignQueue(Global::eventQueue);
-	position = startingPosition;
-	camera = cam;
-	speed = random.GetRandomNumber();
+	texture = Util::TextureArrays::enemies[1];
+	active = false;
 	width = 39;
 	height = 16;
-	targetDirection.Normalize();
-	texture = Util::TextureArrays::enemies[1];
-	rotation = std::acos(targetDirection.X / (targetDirection.Magnitude())) * 57 + 180;
-	rotation = (targetDirection.Y < 0) ? -rotation : rotation;
-}
-
-Projectile::Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send, const int p_Speed) : type(t), targetDirection(target), random(4, 7), creationTime(std::chrono::system_clock::now()), player(Global::game->player), sender(send){
-	eventInterface.AssignQueue(Global::eventQueue);
-	position = startingPosition;
-	camera = cam;
-	width = 39;
-	height = 16;
-	speed = p_Speed;
-	targetDirection.Normalize();
-	texture = Util::TextureArrays::enemies[1];
-	rotation = std::acos(targetDirection.X / (targetDirection.Magnitude())) * 57 + 180;
-	rotation = (targetDirection.Y < 0) ? -rotation : rotation;
 }
 
 void Projectile::Collide(){
-
+	
 	for (auto& decoration : Global::game->decorations.array){
 		if (CollidingCircle(*decoration, 30)){
 			GameFr::Util::EventDataPoint data(position, {});
@@ -147,6 +152,7 @@ void Projectile::Collide(){
 }
 
 void Projectile::Update(){
+	if (!active) return;
 	GetRenderingPosition(*camera);
 	if (onScreen) {
 		DrawTexturePro(

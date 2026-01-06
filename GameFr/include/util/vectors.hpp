@@ -20,7 +20,7 @@ namespace GameFr{
 		static float DotProduct(const Vector2& first, const Vector2& second);
 		
 		void Normalize();
-		float Magnitude();
+		float Magnitude() const;
 	};
 
 	struct Vector3{

@@ -5,26 +5,28 @@
 #include <cstdint>
 #include <entities.hpp>
 #include <util/Randomizer.hpp>
+#include <util/vectors.hpp>
 #include "Player.hpp"
 
-class Projectile : public GameFr::Entity2D{ public:
+class Projectile : public GameFr::Entity2D{ 
+public:
 	enum struct Types;
 	enum struct Senders;
-	Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send);
-	Projectile(const Types t, const GameFr::Vector2 target, const GameFr::Vector2 startingPosition, const std::shared_ptr<GameFr::Camera2D> cam, const Senders send, const int p_Speed);
+	Projectile();
 	Projectile(const Projectile& other);
 	void Update() override;
 private:
-	const std::chrono::system_clock::time_point creationTime;
+	bool active;
+	std::chrono::system_clock::time_point creationTime;
 	std::shared_ptr<Util::Texture> texture;
 	void Collide();
 	void OnCollision();
 	const std::shared_ptr<Player> player;
-	const Types type;
-	const Senders sender;
+	Types type;
+	Senders sender;
 	float rotation;
 	int speed;
-	std::shared_ptr<GameFr::Camera2D> camera;
+	const std::shared_ptr<GameFr::Camera2D> camera;
 	GameFr::Randomizer random;
 	GameFr::Vector2 targetDirection;
 	friend class ProjectileFactory;
@@ -47,5 +49,6 @@ class ProjectileFactory{
 public:
 	std::array<std::shared_ptr<Projectile>, 800> projectileList;
 	ProjectileFactory();
+	void OverrideProjectile(std::shared_ptr<Projectile>& projectile, const Projectile::Types type, const GameFr::Vector2 targetPos, const GameFr::Vector2 startPos, const Projectile::Senders senderType, const int p_speed);
 	void Update();
 };
