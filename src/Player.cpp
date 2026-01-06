@@ -2,7 +2,10 @@
 #include "Enemy.hpp"
 #include "util/Globals.hpp"
 #include "Projectile.hpp"
+#include "util/Texture.hpp"
 #include "util/TextureArrays.hpp"
+#include <memory>
+#define TO_DEGREES * 57 + 180
 
 Player::Player(){
 	eventInterface.AssignQueue(Global::eventQueue); 
@@ -51,6 +54,8 @@ void Player::StopMovementBasedOnDirection(const std::shared_ptr<const Decoration
 void Player::Shoot(){
 	//check if enough time has passed since the last time we shot
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && std::chrono::system_clock::now() - gun.lastShot >= gun.firingSpeed){
+		texture = Util::TextureArrays::decorations[3];
+		playShootingAnimation = true;
 		GameFr::Vector2 mousePosition(GetMouseX() + gun.inaccuracy, GetMouseY() + gun.inaccuracy);
 		GameFr::Vector2 projectileDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y); //Convert from camera's cartesian system to game and then get vector connecting them
 		GameFr::Util::EventDataPoint data(projectileDirection, {(int)gun.projectileType, (int)Projectile::Senders::PLAYER, gun.projectileSpeed});
@@ -107,7 +112,7 @@ void Player::Collide(){
 void Player::RotateTexture(){
 	GameFr::Vector2 mousePosition(GetMouseX(), GetMouseY());
 	GameFr::Vector2 mouseDirection(camera->position.X + mousePosition.X - position.X, camera->position.Y + mousePosition.Y - position.Y); //Convert from camera's cartesian system to game and then get vector connecting them
-	rotation = std::acos(mouseDirection.X / (mouseDirection.Magnitude())) * 57 + 180;
+	rotation = std::acos(mouseDirection.X / mouseDirection.Magnitude()) TO_DEGREES;
 	rotation = (mouseDirection.Y < 0) ? -rotation : rotation;
 }
 
@@ -118,6 +123,15 @@ void Player::Update(){
 	Push(direction, speed);
 	Shoot();
 	RotateTexture();
+	//handle switch between animated texture and static one
+	if (playShootingAnimation){
+		auto reinterpretedTexture = std::reinterpret_pointer_cast<Util::AnimatedTexture>(texture);
+		reinterpretedTexture->Update();
+		if (reinterpretedTexture->Finished()){
+			texture = Util::TextureArrays::decorations[1];
+			playShootingAnimation = false;
+		} 
+	}
 	if (onScreen){
 		DrawTexturePro(
 			texture->texture, 

@@ -3,7 +3,7 @@
 #include "util/Texture.hpp"
 #include "util/TextureArrays.hpp"
 
-std::array<std::shared_ptr<Util::Texture>, 3> Util::TextureArrays::decorations;
+std::array<std::shared_ptr<Util::Texture>, 4> Util::TextureArrays::decorations;
 std::array<std::shared_ptr<Util::Texture>, 2> Util::TextureArrays::enemies;
 std::shared_ptr<GameFr::EventQueue> Global::eventQueue;
 std::unique_ptr<GameManager> Global::game;
@@ -13,7 +13,8 @@ void InitTextureArrays(){
 	TA::decorations = {
 		std::make_shared<Util::Texture>("resources/Wall.png"),
 		std::make_shared<Util::Texture>("resources/Player.png"),
-		std::make_shared<Util::AnimatedTexture>("resources/Explosion.gif")
+		std::make_shared<Util::AnimatedTexture>("resources/Explosion.gif"),
+		std::make_shared<Util::AnimatedTexture>("resources/PlayerShooting.gif")
 	};
 	TA::enemies = {
 		std::make_shared<Util::Texture>("resources/Enemy.png"),

@@ -22,8 +22,10 @@ namespace Util{
 		uint32_t frameCounter;
 		int totalFrames;
 		int frameOffset;
+		bool finished;
 	public:
 		uint32_t frameDelay;
+		bool Finished();
 		AnimatedTexture(const std::string path);
 		AnimatedTexture();
 		AnimatedTexture(const AnimatedTexture& other);

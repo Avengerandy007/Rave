@@ -38,6 +38,7 @@ class Player : public GF::Entity2D{
 	float rotation;
 	std::shared_ptr<Util::Texture> texture;
 	std::shared_ptr<GF::Camera2D> camera;
+	bool playShootingAnimation;
 
 
 	void Move();

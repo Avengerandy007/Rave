@@ -63,13 +63,21 @@ namespace Util{
 
 	void AnimatedTexture::Update(){
 		frameCounter++;
+		finished = false;
 		if (frameCounter >= frameDelay){
 			frameCounter = 0;;
 			frame++;
-			if (frame >= totalFrames) frame = 0;
+			if (frame >= totalFrames) {
+				finished = true;
+				frame = 0;
+			}
 			frameOffset = image.width * image.height * 4 * frame;
 			UpdateTexture(texture, (unsigned char *)image.data + frameOffset);
 		}
+	}
+
+	bool AnimatedTexture::Finished(){
+		return finished;
 	}
 
 	void AnimatedTexture::Unload(){
